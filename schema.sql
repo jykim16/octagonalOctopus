@@ -1,15 +1,8 @@
-DROP DATABASE IF EXISTS test;
+DOP DATABASE IF EXISTS Avalon;
 
-CREATE DATABASE test;
+CREATE DATABASE Avalon;
 
-USE test;
-
-CREATE TABLE items (
-  id int NOT NULL AUTO_INCREMENT,
-  quantity integer NOT NULL,
-  description varchar(50) NOT NULL,
-  PRIMARY KEY (z)
-);
+USE Avalon;
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql
