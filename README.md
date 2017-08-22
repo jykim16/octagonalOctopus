@@ -4,11 +4,17 @@ A game almost, but not entirely, unlike Avalon.
 
 ## Team
 
+### Greenfield Team
   Patrick Rutherford
   Abhishek Bala
   Yang Lu
   Brian van den Broek
 
+### Legacy Team
+  Gui
+  Jon
+  Matt
+  Yes
 ## Table of Contents
 
 1. [Usage](#Usage)
