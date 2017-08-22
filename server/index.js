@@ -20,7 +20,7 @@ io.on('connection', (socket) => {
             socket.to(data.roomname).emit('playerjoined', {allplayers})
             var accessCode = data.roomname;
             socket.emit('newplayer', {allplayers, accessCode})
-          }); 
+          });
         });
       }
     });
@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
       });
     });
   });
-  
+
   socket.on('disconnect', () => {
     database.removePlayer(socket.conn.id, (gameToken, host) => {
       database.getAllUsernames(gameToken, (allplayers) => {
@@ -134,8 +134,8 @@ io.on('connection', (socket) => {
             database.getMordred(data.roomname, (mordred) => {
               if (mordred.socketid === socket.id) {
                 socket.emit('entermerlin', {results: votesArray});
-              } else{ 
-                  socket.to(mordred.socketid).emit('entermerlin', {results: votesArray}); 
+              } else{
+                  socket.to(mordred.socketid).emit('entermerlin', {results: votesArray});
               }
             });
           } else {
@@ -161,7 +161,7 @@ io.on('connection', (socket) => {
         for (var i = 0; i < users.length; i++) {
           allPlayers[users[i].dataValues.username] = users[i].dataValues.role;
         }
-        io.in(data.roomname).emit('merlinfinaloutcome', {merlinGuessed, allPlayers}); 
+        io.in(data.roomname).emit('merlinfinaloutcome', {merlinGuessed, allPlayers});
       });
     });
   });
