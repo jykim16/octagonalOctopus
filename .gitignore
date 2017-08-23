@@ -3,3 +3,4 @@ npm-debug.log
 .DS_Store
 /*.env
 /react-client/dist/bundle.js
+config.js
