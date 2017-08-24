@@ -20,7 +20,7 @@ class EnterMissonPlayersScreen extends React.Component {
         <h3> Decide who Goes on the Mission </h3>
 
         <InfoPanel role={this.props.role}   extraInfo = {this.props.extraInfo}/>
-        
+
         <MissionHistory missionHistory={this.props.history}  />
 
         <h5>
@@ -29,7 +29,7 @@ class EnterMissonPlayersScreen extends React.Component {
 
         <ul id="missionSelection">
         {this.props.players.map((player, index)=>{
-          return (<li key={index}><label><input class="missionChoices" onChange={this.selectedForMission} type="checkbox" name="player" value={player}/></label>{player}</li>)
+          return (<li key={index}><label><input className="missionChoices" onChange={this.selectedForMission} type="checkbox" name="player" value={player}/></label>{player}</li>)
         })}
 
         </ul>
