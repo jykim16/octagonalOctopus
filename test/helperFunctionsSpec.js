@@ -2,7 +2,6 @@ const assert = require('assert');
 const expect = require('chai').expect;
 
 const helperFunctions = require('../server/helper-functions.js');
-const db = require('../database-mongo/index.js');
 
 describe('missionResults', function() {
   // it('should return false if a mission fails', function(done){

@@ -5,7 +5,14 @@ let Missions = (props) => {
 
   return (
     <div>
-      <div>Missions</div>
+      <div>
+        <span className='title' style={{fontSize:'5vw', padding: '0 0 0 .4em'}}>Missions</span>
+        <div className='displayHelp'>{`
+            The Missions panel displays the outcome of the quests.
+            A picture of Mordred means somone has sabotaged your mission!
+            A picture of Merlin means a sufficient number of brave knights have succeed their mission`}
+        </div>
+      </div>
       <div className={`mission ${props.currentMission === 0 ? 'selected' : ''}`}>
         <span className={`circle ${props.history[0] ? 'pass' : 'fail'} ${props.currentMission >= 0 ? 'active' : 'inactive'}`} onClick={props.setCurrentMission(0)} >{props.numPeopleOnMission[0]}</span>
       </div>

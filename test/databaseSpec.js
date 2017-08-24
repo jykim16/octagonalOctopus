@@ -2,9 +2,6 @@ var assert = require('assert');
 var expect = require('chai').expect;
 var mongoose = require('mongoose');
 
-var database = require('../database-mongo/index.js');
-
-
 describe('CreateGame', function() {
   it('should create a game with given token', function(done){
     database.createGame('12345', 'hostName', 'aaaaa', function(){

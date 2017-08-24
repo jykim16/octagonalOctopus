@@ -252,11 +252,11 @@ button:hover, .submit:hover {
 }
 
 .selected {
-  background-color: rgba(255,253,214,.5);
+  background-color: rgb(239,255,61);
 }
 .mission {
   display: inline-block;
-  border-radius: 45% 45% 0 0;
+  border-radius: 50%;
 }
 .mission .circle {
   display: inline-block;
@@ -273,15 +273,30 @@ button:hover, .submit:hover {
 }
 
 .pass{
-  background-color: rgb(40,173,112);
-  background-image: url("thumbs_up.png");
+  background-image: url("whiteStone.png");
+  background-size: cover;
+  color: black;
+  font-size: 1em
+}
+
+.mission .pass{
+  background-image: url("./Resources/merlin.png");
   background-size: cover;
 }
 
+
 .fail {
-  background-color: rgb(227,92,49);
-  background-image: url("thumbs_down.png");
+  background-image: url("blackStone.jpeg");
   background-size: cover;
+}
+
+.mission .fail{
+  background-image: url("./Resources/mordred.png");
+  background-size: cover;
+}
+
+.mission .inactive{
+  background-image: url("");
 }
 
 .active {
@@ -295,7 +310,6 @@ button:hover, .submit:hover {
 }
 
 .votetrack {
-  background-color: rgba(255,253,214,.5);
   display: flex;
   display: -webkit-flex;
   justify-content: space-around;
@@ -318,11 +332,41 @@ button:hover, .submit:hover {
   line-height: 7vw;
 }
 
+.displayHelp {
+  position: absolute;
+  width: 55vw;
+  background-color: rgba(227,236,53,1);
+  font-size: 2em;
+  color: black;
+  display: none;
+  padding: 10px;
+  border-radius: 30px;
+  margin: 10px;
+}
+
+.title:hover + .displayHelp {
+  display: block;
+}
+
+.title:hover {
+  text-shadow:
+    1px 0px 1px rgb(73,71,70), 0px 1px 1px rgb(73,71,70),
+    2px 1px 1px rgb(73,71,70), 1px 2px 1px rgb(73,71,70),
+    3px 2px 1px rgb(73,71,70), 2px 3px 1px rgb(73,71,70),
+    4px 3px 1px rgb(73,71,70), 3px 4px 1px rgb(73,71,70),
+    5px 4px 1px rgb(73,71,70), 4px 5px 1px rgb(73,71,70),
+    6px 5px 1px rgb(73,71,70), 5px 6px 1px rgb(73,71,70),
+    7px 6px 1px rgb(73,71,70);
+}
+
+.photos{
+  width: 80%;
+}
+
 div.bottom {
   display: inline-block;
   float: none;
   text-align: left;
-
 }
 
 .table th {
