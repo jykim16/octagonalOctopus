@@ -200,3 +200,37 @@ button {
 button:hover, .submit:hover {
   color: blue;
 }
+.outer {
+
+}
+.circle {
+  display: inline-block;
+  font-size: 7vw;
+  margin: .2vw;
+  width: 9vw;
+  height: 9vw;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  text-align: center;
+}
+
+.pass {
+  background-color: rgb(40,173,112);
+
+}
+
+.fail {
+  background-color: rgb(227,92,49);
+
+}
+
+.active {
+  opacity: 1;
+}
+
+.inactive {
+  opacity: .4;
+  background-color: #bec0dd;
+  color: rgb(255, 255, 255, 1);
+}
