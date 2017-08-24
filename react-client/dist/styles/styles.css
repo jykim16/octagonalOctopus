@@ -7,23 +7,17 @@
   --If it contains a backButton, it will be inside the *componentname*Input
   with .backButton.
 **********************/
-@font-face {
-    font-family: papyrus;
-    src: url('Papyrus.ttc');
-}
-
-
 body {
   display: flex;
   justify-content: center;
   align-items: center;
   resize: vertical;
-  background-image: url("bg2.jpg");
+  background-image: url("bg.jpg");
   background-repeat: no-repeat, repeat;
   background-size: 100%, auto;
   background-color: black;
   background-attachment: fixed;
-  font-family: papyrus;
+  font-family: 'Quintessential', cursive;
   overflow: auto;
 
 }
@@ -166,7 +160,7 @@ input {
   height: 100px;
   background-color: lightgrey;
   font-size: 50px;
-  font-family: papyrus;
+  font-family: 'Eagle Lake', cursive;
   font-weight: bolder;
 }
 
@@ -193,7 +187,7 @@ button {
   align-self: center;
   background-color: lightgrey;
   font-size: 50px;
-  font-family: papyrus;
+  font-family: 'Eagle Lake', cursive;
 }
 
 /****Hover on buttons turns text red****/
