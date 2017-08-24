@@ -18,7 +18,7 @@ import GameOutcomeScreen from './components/GameOutcomeScreen.jsx';
 import InfoPanel from './components/InfoPanel.jsx';
 import openSocket from 'socket.io-client';
 import GameBoard from './components/GameBoard/GameBoard.jsx';
-import RenderPhotos from './components/RenderPhotos.jsx';
+import RenderPhotos from './components/renderPhotos.jsx';
 
 class App extends React.Component {
   constructor(props) {
