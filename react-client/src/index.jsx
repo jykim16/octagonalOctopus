@@ -170,6 +170,8 @@ class App extends React.Component {
       }
     });
 
+
+>>>>>>> missions
     this.state = {
 
       pageID: 'WelcomeScreen',
@@ -386,6 +388,7 @@ class App extends React.Component {
   render () {
     return (
         <div>
+        <GameBoard />
         {this.screenDispatch[this.state.pageID]()}
       </div>)
   }
