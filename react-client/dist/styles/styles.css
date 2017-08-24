@@ -13,7 +13,7 @@ body {
   align-items: center;
   resize: vertical;
   background-image: url("bg.jpg");
-  background-repeat: no-repeat, repeat;
+  background-repeat: repeat;
   background-size: 100%, auto;
   background-color: black;
   background-attachment: fixed;
@@ -29,10 +29,9 @@ body {
   /*margin-top: 80px;*/
   width: 80%;
   padding: 20px;
-  background: #00001a;
+  background: rgba(0, 0, 26, 0.5);
   color: white;
   border-radius: 15px;
-  opacity: 0.5;
   overflow: auto;
 }
 
@@ -40,7 +39,9 @@ body {
 #welcomeScreen, #playerEnterNameScreen, #playerEnterNameScreenInput,
 #gameOwnerEnterNameScreen, #gameOwnerEnterNameScreenInput,
 #gameOwnerWaitingForPlayersScreen, #enterMissionPlayersScreen,
-#missionVoteScreen, #missionOutcome, #playerWaitingForPlayersScreen {
+#missionVoteScreen, #missionOutcome, #playerWaitingForPlayersScreen, 
+#awaitMissionOutcomeScreen, #awaitAssassinScreen, #discussMissionPlayersScreen, 
+#merlinChoiceScreen {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,14 +100,14 @@ body {
   text-align: center;
 }
 
-#awaitMissionOutcomeScreen {
-  text-align: center;
-}
-
 #infoPanel {
+  display: flex;
   padding: 10px;
   border-width: 2px;
   border-color: black;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
 }
 
 #gameOutcomeScreen {
@@ -144,14 +145,19 @@ h2 {
 }
 
 ul {
-  align-self: flex-start;
-  /*text-align: left;*/
+  /*align-self: flex-start;
+  text-align: left;*/
   list-style-type: upper-roman;
   font-size: 50px;
 }
 
-ol {
+ol, table {
   font-size: 50px;
+}
+
+#tableRules{
+    table-layout: fixed;
+    width: 730px;
 }
 
 input {
@@ -170,13 +176,13 @@ input {
     border-radius:7px;
     font-size:15px;
     padding:5px;
-}
+}*/
 
-input[type=text]:focus {
+input[type=text]:hover {
     outline:none;
     border-color:red;
-    box-shadow:0 0 10px red;
-}*/
+    box-shadow:0 0 30px red;
+}
 
 
 button {
@@ -228,3 +234,20 @@ button:hover, .submit:hover {
   background-color: #bec0dd;
   color: rgb(255, 255, 255, 1);
 }
+
+.photos{
+  width: 80%;
+}
+
+.photosRules{
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+/*.infoPanelParent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}*/

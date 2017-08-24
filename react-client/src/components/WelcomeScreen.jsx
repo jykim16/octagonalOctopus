@@ -30,17 +30,9 @@ class WelcomeScreen extends React.Component {
       var pages = {welcome: (<div id='welcomeScreen'>
      <h2> Welcome to Definitely Not Avalon </h2>
 
-        <p>
-            Clicking 'New Game' will make you the owner of a game and
-            you will get a short code to give to your friends so that
-            they can join your game.
-        </p>
+        
+        
 
-        <p>
-            Clicking 'Join' will take you to a screen where you can
-            enter a short code given to you by the owner of a game to
-            join that game.
-        </p>
         <div className="welcomeScreenInput">
           <button onClick={this.host} >
             New Game
@@ -50,6 +42,59 @@ class WelcomeScreen extends React.Component {
             Join
           </button>
         </div>
+
+        <div id="rules">
+
+          <table id="tableRules">
+            <tr>
+              <th>Mordred Team</th>
+              <th>Merlin Team</th>
+            </tr>
+            <tr>
+              <th style={{fontSize:'35px'}}>sabotage 3 missions to win</th>
+              <th style={{fontSize:'35px'}}>succeed 3 missions to win</th>
+            </tr>
+            <tr>
+              <td><div className="photosRules" style={{content: `url(/styles/Resources/mordred.png)`}} ></div></td>
+              <td><div className="photosRules" style={{content: `url(/styles/Resources/merlin.png)`}} ></div></td>
+            </tr>
+            <tr>
+              <td style={{fontSize:'35px'}}>Mordred</td>
+              <td style={{fontSize:'35px'}}>Merlin</td>
+            </tr>
+            <tr>
+              <td><div className="photosRules" style={{content: `url(/styles/Resources/minionofmordred.png)`}} ></div></td>
+              <td><div className="photosRules" style={{content: `url(/styles/Resources/LoyalServant.png)`}} ></div></td>
+            </tr>
+            <tr>
+              <td style={{fontSize:'35px'}}>Minion of Mordred</td>
+              <td style={{fontSize:'35px'}}>Loyal Servant</td>
+            </tr>
+            <tr>
+              <td><div className="photosRules" style={{content: `url(/styles/Resources/morgana.png)`}} ></div></td>
+              <td><div className="photosRules" style={{content: `url(/styles/Resources/percival.png)`}} ></div></td>
+            </tr>
+            <tr>
+              <td style={{fontSize:'35px'}}>Morgana</td>
+              <td style={{fontSize:'35px'}}>Percival</td>
+            </tr>
+             <tr>
+              <td><div className="photosRules" style={{content: `url(/styles/Resources/oberon.png)`}} ></div></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td style={{fontSize:'35px'}}>Oberon</td>
+              <td style={{fontSize:'35px'}}></td>
+            </tr>
+          </table>
+
+          
+        </div>
+
+
+
+
+
       </div>
     ),
     newgame: (<GameOwnerEnterNameScreen

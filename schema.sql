@@ -5,6 +5,9 @@ CREATE DATABASE Avalon;
 USE Avalon;
 
 
-/*  Execute this file from the command line by typing:
- *    mysql -u root < server/schema.sql
- *  to create the database and the tables.*/
+/* FOLLOW THESE STEPS
+brew install mysql
+mysql.server start
+mysql -u root < schema.sql
+*/
+

@@ -14,7 +14,7 @@ class AwaitAssassinScreen extends React.Component {
   render() {
 
     return (
-      <div>
+      <div id="awaitAssassinScreen">
 
         <h3> Awaiting Mordred </h3>
         

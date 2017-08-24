@@ -27,7 +27,7 @@ class MerlinChoiceScreen extends React.Component {
   render() {
 
     return (
-      <div>
+      <div id="merlinChoiceScreen">
 
         <h3> Choose Your Merlin </h3>
 

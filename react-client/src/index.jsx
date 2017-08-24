@@ -370,13 +370,13 @@ class App extends React.Component {
       )},
 
 
-    renderPhoto: () => {
+    // renderPhoto: () => {
 
-      return (
-        <RenderPhotos
-        role={this.state.role}
-        />
-    )},
+    //   return (
+    //     <RenderPhotos
+    //     role={this.state.role}
+    //     />
+    // )},
 
 
 

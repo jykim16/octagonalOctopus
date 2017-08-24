@@ -45,6 +45,7 @@ class GameOwnerEnterNameScreen extends React.Component {
             <input
               type="text"
               name="Name"
+              placeholder="Your Name" 
               value={this.state.nameFormValue}
               onChange={this.handleNameChange}
               />

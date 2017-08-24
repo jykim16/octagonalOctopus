@@ -12,7 +12,7 @@ class DiscussMissionPlayersScreen extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="discussMissionPlayersScreen">
 
         <InfoPanel role={this.props.role} extraInfo = {this.props.extraInfo}/>
 
