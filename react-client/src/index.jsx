@@ -172,19 +172,36 @@ class App extends React.Component {
     });
 
     
+    /*
+    PlayerEnterNameScreen    
+    GameOwnerEnterNameScreen
+      AwaitAssassinScreen -> doesn't show
+    AwaitMissionOutcomeScreen
+    DiscussMissionPlayersScreen
+    EnterMissionPlayersScreen
+      GameOutcomeScreen -> doesn't show after 3 failed or 3 passed
+    GameOwnerWaitingForPlayersScreen
+      MerlinChoiceScreen -> doesn't show
+    MissionOutcomeScreen
+    MissionVoteScreen
+    PlayerWaitingForPlayersScreen
+    WelcomeScreen
+    */
+
+
     this.state = {
 
       pageID: 'WelcomeScreen',
 
-      players: ['abhi', 'yang', 'rutherford', 'patricks bf', 'host'],
+      players: ['abhi', 'yang', 'rutherford', 'patricksbf', 'host'],
 
-      role: '',
+      role: 'abscd',
 
       spyCount: 3,
 
       accessCode: 'z3uewg',
 
-      missionPlayers: [],  
+      missionPlayers: ['abhi', 'yang', 'rutherford'],  
 
       missionSize: 3,
 
@@ -194,9 +211,9 @@ class App extends React.Component {
 
       host: false,
 
-      username: '',
+      username: 'Guillaume',
 
-      missionOutcome: [],
+      missionOutcome: ['DZfrdgth','frsgdhj'],
 
       gameOutcome: '', 
 

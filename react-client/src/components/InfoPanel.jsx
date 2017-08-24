@@ -15,7 +15,6 @@ class InfoPanel extends React.Component {
       }
       return (
       <div id="infoPanel">
-        <h5> Info Panel </h5>
 
         <p> Your role: {this.props.role} </p>
         <p> {extraInfo} </p>
