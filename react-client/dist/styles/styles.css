@@ -200,29 +200,51 @@ button {
 button:hover, .submit:hover {
   color: blue;
 }
-.outer {
 
+.GameBoard {
+  height: 40vw;
+  background-image: url("castle.jpg");
+  background-size: cover;
+  padding: 5vw 0vw;
 }
-.circle {
+
+.VoteTrack {
+}
+
+.Missions {
+}
+
+.selected {
+  background-color: rgba(255,253,214,.5);
+}
+.mission {
+  display: inline-block;
+  border-radius: 45% 45% 0 0;
+}
+.mission .circle {
   display: inline-block;
   font-size: 7vw;
-  margin: .2vw;
-  width: 9vw;
-  height: 9vw;
+  margin: .7vw;
+  width: 14vw;
+  height: 14vw;
   border-radius: 50%;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   text-align: center;
+  vertical-align: middle;
+  line-height: 15vw;
 }
 
-.pass {
+.pass{
   background-color: rgb(40,173,112);
-
+  background-image: url("thumbs_up.png");
+  background-size: cover;
 }
 
 .fail {
   background-color: rgb(227,92,49);
-
+  background-image: url("thumbs_down.png");
+  background-size: cover;
 }
 
 .active {
@@ -230,9 +252,33 @@ button:hover, .submit:hover {
 }
 
 .inactive {
-  opacity: .4;
-  background-color: #bec0dd;
-  color: rgb(255, 255, 255, 1);
+  background-color: rgba(190,192,221,.7);
+  background-image: url("");
+
+}
+
+.votetrack {
+  background-color: rgba(255,253,214,.5);
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-around;
+  padding: 5vw 0vw;
+  height: 10vw;
+  border-radius: 0 0 40% 40%;
+}
+
+.votetrack .circle {
+  display: inline-block;
+  font-size: 3vw;
+  margin: .7vw;
+  width: 7vw;
+  height: 7vw;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 7vw;
 }
 
 .photos{
