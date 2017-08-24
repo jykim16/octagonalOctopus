@@ -1,4 +1,5 @@
 import React from 'react';
+import GameOutcomeScreen from './components/GameOutcomeScreen.jsx';
 
 class MissionHistory extends React.Component {
 
@@ -8,6 +9,7 @@ class MissionHistory extends React.Component {
 
   render() {
     return (
+
       <div>
         <h6> Mission History   </h6>
         <ol>

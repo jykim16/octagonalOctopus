@@ -13,7 +13,6 @@ import AwaitMissionOutcomeScreen from './components/AwaitMissionOutcomeScreen.js
 import MissionOutcomeScreen from './components/MissionOutcomeScreen.jsx';
 import AwaitAssassinScreen from './components/AwaitAssassinScreen.jsx';
 import MerlinChoiceScreen from './components/MerlinChoiceScreen.jsx';
-import GameOutcomeScreen from './components/GameOutcomeScreen.jsx';
 import InfoPanel from './components/InfoPanel.jsx';
 import openSocket from 'socket.io-client';
 import GameBoard from './components/GameBoard/GameBoard.jsx';
@@ -170,8 +169,6 @@ class App extends React.Component {
       }
     });
 
-
->>>>>>> missions
     this.state = {
 
       pageID: 'WelcomeScreen',
@@ -388,7 +385,6 @@ class App extends React.Component {
   render () {
     return (
         <div>
-        <GameBoard />
         {this.screenDispatch[this.state.pageID]()}
       </div>)
   }
