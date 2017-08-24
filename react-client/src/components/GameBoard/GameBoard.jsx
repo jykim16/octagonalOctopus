@@ -21,14 +21,18 @@ class GameBoard extends React.Component {
 
   render() {
     return (
-      <div>
-        <Missions
+      <div className='GameBoard'>
+        <Missions className='Missions'
           history = {[true, false]}
           playerVotes = {[[true], [true, false]]}
-          numPeopleOnMission = {[1,2,3,4,5]}
+          numPeopleOnMission = {[2,3,2,3,3]}
           currentMission = {1}
+          setCurrentMission = {(num)=>{console.log(num)}}
         />
-        <VoteTrack />
+      <VoteTrack className='VoteTrack'
+        voteTrack={[false, false, false, false, true]}
+        />
+
       </div>
     );
   }
