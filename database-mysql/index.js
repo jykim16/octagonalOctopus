@@ -89,7 +89,7 @@ module.exports.votingInfo = function(gameToken, callback) {
 module.exports.votesNeeded = function(gameToken, callback) {
   Game.findOne({where: {gameToken}})
   .then((game) => {
-    callback(JSON.parse(game.dataValues.votesNeeded)[game.dataValues.missionNumber]);
+    callback(JSON.parse(game.dataValues.votesNeeded)[game.dataValues.missionNumber], JSON.parse(game.dataValues.votesNeeded));
   });
 };
 

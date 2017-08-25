@@ -1,5 +1,5 @@
 import React from 'react';
-import GameOutcomeScreen from './components/GameOutcomeScreen.jsx';
+import GameBoard from './GameBoard/GameBoard.jsx';
 
 class MissionHistory extends React.Component {
 
@@ -8,8 +8,15 @@ class MissionHistory extends React.Component {
   }
 
   render() {
+{    console.log('missionHistory: ', this.props.missionHistory)}
+    <GameBoard
+      history = {this.props.missionHistory}
+      playerVotes = {[[true], [true, false]]}
+      numPeopleOnMission = {[2,3,2,3,3]}
+      currentMission = {this.props.history.length}
+      voteTrack={[false, false, false, false, true]}
+      />
     return (
-
       <div>
         <h6> Mission History   </h6>
         <ol>

@@ -19,18 +19,25 @@ class GameBoard extends React.Component {
     super(props);
   }
 
+  // var parseHistory(historyString) {
+  //   return historyString.map((result)=> {
+  //     if(Number(result[7]) > 0) {
+  //
+  //     }
+  //   });
+  // }
+
   render() {
     return (
       <div className='GameBoard'>
         <Missions className='Missions'
-          history = {[true, false]}
-          playerVotes = {[[true], [true, false]]}
-          numPeopleOnMission = {[2,3,2,3,3]}
-          currentMission = {1}
-          setCurrentMission = {(num)=>{console.log(num)}}
+          history = {this.props.history}
+          numPeopleOnMissions = {this.props.numPeopleOnMissions}
+          currentMission = {this.props.history.length}
         />
       <VoteTrack className='VoteTrack'
-        voteTrack={[false, false, false, false, true]}
+        voteTrack = {this.props.voteTrack}
+        currentMission = {this.props.history.length}
         />
 
       </div>
