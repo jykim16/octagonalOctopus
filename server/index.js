@@ -72,7 +72,7 @@ io.on('connection', (socket) => {
   socket.on('start game', (data) => {
     database.updateVotesAndParticipantNum(data.roomname, () => {
       database.getAllSocketIds(data.roomname, (socketids) => {
-        database.votesNeeded(data.roomname, (votesNeeded) => {
+        database.votesNeeded(data.roomname, (votesNeeded, numPeopleOnMissions) => {
           var roles = helpers.generateRoles(socketids);
           var userRoles = {};
           database.getAllPlayers(data.roomname, (users) => {
@@ -80,17 +80,16 @@ io.on('connection', (socket) => {
               userRoles[roles[users[i].dataValues.socketid]] = [users[i].dataValues.username, users[i].dataValues.socketid];
             }
             var extraInfoAssignment = helpers.extraInfoAssignment(userRoles);
-
-            console.log('extraInfoAssignment: ', extraInfoAssignment);
-
-            socket.emit('hoststart', {role: roles[socket.id], missionSize: votesNeeded, extraInfo: extraInfoAssignment[socket.id]});
-            for (var i = 0; i < socketids.length; i++) {
-              database.assignRole(socketids[i], roles[socketids[i]], () => {
-              });
-              if (socketids[i] !== socket.id) {
-                socket.to(socketids[i]).emit('playerstart', {role: roles[socketids[i]], missionSize: votesNeeded, extraInfo: extraInfoAssignment[socketids[i]]});
+            database.getResults(data.roomname,(history) => {
+              socket.emit('hoststart', {role: roles[socket.id], history: history, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socket.id]});
+              for (var i = 0; i < socketids.length; i++) {
+                database.assignRole(socketids[i], roles[socketids[i]], () => {
+                });
+                if (socketids[i] !== socket.id) {
+                  socket.to(socketids[i]).emit('playerstart', {role: roles[socketids[i]], history: history, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socketids[i]]});
+                }
               }
-            }
+            });
           });
         });
       });

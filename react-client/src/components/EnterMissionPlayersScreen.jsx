@@ -14,6 +14,13 @@ class EnterMissonPlayersScreen extends React.Component {
   }
 
   render() {
+    console.log("missionSize: ", this.props.missionSize
+    ,"role: ", this.props.role
+    ,"history: ", this.props.history
+    ,"socket: ", this.props.socket
+    ,"roomname: ", this.props.roomname
+    ,"history: ", this.props.history
+    ,"extraInfo: ", this.props.extraInfo);
     return (
       <div id="enterMissionPlayersScreen">
 
@@ -21,7 +28,7 @@ class EnterMissonPlayersScreen extends React.Component {
 
         <InfoPanel role={this.props.role}   extraInfo = {this.props.extraInfo}/>
 
-        <MissionHistory missionHistory={this.props.history}  />
+        <MissionHistory history={this.props.history} numPeopleOnMissions={this.props.numPeopleOnMissions} missionHistory={this.props.history}  />
 
         <h5>
         Discuss Which {this.props.missionSize} Players to Send on the Mission and enter the results:

@@ -68,6 +68,8 @@ class App extends React.Component {
 
       this.setState({role: data.role,
                     host: true,
+                    history: data.history,
+                    numPeopleOnMissions: data.numPeopleOnMissions,
                     missionSize: data.missionSize,
                     extraInfo: data.extraInfo,
                     pageID: 'EnterMissionPlayersScreen',
@@ -82,6 +84,8 @@ class App extends React.Component {
       console.log('playerstart: ', data.extraInfo);
 
       this.setState({role: data.role,
+                      history: history,
+                      numPeopleOnMissions: numPeopleOnMissions,
                       missionSize: data.missionSize,
                       extraInfo: data.extraInfo,
                       pageID: 'DiscussMissionPlayersScreen',
@@ -153,7 +157,8 @@ class App extends React.Component {
 
       this.setState({ gameOutcome: data.finalOutcome,
                       playerRoleMapping: data.allPlayers,
-                      missionOutcome: this.state.missionOutcome.concat([history])}, () => {
+                      missionOutcome: this.state.missionOutcome.concat([history])
+                    }, () => {
                         this.setState({pageID: 'GameOutcomeScreen'})
                       });
     });
@@ -401,6 +406,17 @@ class App extends React.Component {
   render () {
     return (
         <div>
+        <GameBoard
+          history = {[true, true, false]}
+          numPeopleOnMissions = {[2,3,2,3,3]}
+          voteTrack = {{
+            0: [false, false, false, false, true],
+            1: [true],
+            2: [false, false, true],
+            3: [false],
+            4: []
+          }}
+        />
         {this.screenDispatch[this.state.pageID]()}
       </div>)
   }

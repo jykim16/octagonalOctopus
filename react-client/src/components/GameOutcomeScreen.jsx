@@ -3,7 +3,6 @@ var _ = require('lodash');
 
 import MissionHistory from './MissionHistory.jsx';
 
-
 class GameOutcomeScreen extends React.Component {
 
   constructor(props) {
@@ -33,10 +32,9 @@ class GameOutcomeScreen extends React.Component {
     return (
 
       <div id="gameOutcomeScreen">
-
         <h5> Game Outcome  </h5>
 
-        <MissionHistory missionHistory={this.props.history}/>
+        <MissionHistory history={this.props.history} numPeopleOnMissions={this.props.numPeopleOnMissions} missionHistory={this.props.history}/>
 
         <div>{result}</div>
 
