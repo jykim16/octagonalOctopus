@@ -39,8 +39,8 @@ body {
 #welcomeScreen, #playerEnterNameScreen, #playerEnterNameScreenInput,
 #gameOwnerEnterNameScreen, #gameOwnerEnterNameScreenInput,
 #gameOwnerWaitingForPlayersScreen, #enterMissionPlayersScreen,
-#missionVoteScreen, #missionOutcome, #playerWaitingForPlayersScreen, 
-#awaitMissionOutcomeScreen, #awaitAssassinScreen, #discussMissionPlayersScreen, 
+#missionVoteScreen, #missionOutcome, #playerWaitingForPlayersScreen,
+#awaitMissionOutcomeScreen, #awaitAssassinScreen, #discussMissionPlayersScreen,
 #merlinChoiceScreen {
   display: flex;
   flex-direction: column;
