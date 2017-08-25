@@ -72,7 +72,7 @@ io.on('connection', (socket) => {
   socket.on('start game', (data) => {
     database.updateVotesAndParticipantNum(data.roomname, () => {
       database.getAllSocketIds(data.roomname, (socketids) => {
-        database.votesNeeded(data.roomname, (votesNeeded, numPeopleOnMissions) => {
+        database.votesNeeded(data.roomname, (votesNeeded, numPeopleOnMissions, voteTrack) => {
           var roles = helpers.generateRoles(socketids);
           var userRoles = {};
           database.getAllPlayers(data.roomname, (users) => {
@@ -81,7 +81,7 @@ io.on('connection', (socket) => {
             }
             var extraInfoAssignment = helpers.extraInfoAssignment(userRoles);
             database.getResults(data.roomname,(history) => {
-              socket.emit('hoststart', {role: roles[socket.id], history: history, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socket.id]});
+              socket.emit('hoststart', {role: roles[socket.id], history: history, voteTrack: voteTrack, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socket.id]});
               for (var i = 0; i < socketids.length; i++) {
                 database.assignRole(socketids[i], roles[socketids[i]], () => {
                 });

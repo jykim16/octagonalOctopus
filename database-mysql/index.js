@@ -54,6 +54,10 @@ const Game = sequelize.define('game', {
   },
   numParticipants: {
     type: Sequelize.INTEGER,
+  },
+  voteTrack: {
+    type: Sequelize.STRING,
+    defaultValue: '{"0": [], "1": [], "2": [], "3": [], "4": []}'
   }
 })
 
@@ -89,7 +93,7 @@ module.exports.votingInfo = function(gameToken, callback) {
 module.exports.votesNeeded = function(gameToken, callback) {
   Game.findOne({where: {gameToken}})
   .then((game) => {
-    callback(JSON.parse(game.dataValues.votesNeeded)[game.dataValues.missionNumber], JSON.parse(game.dataValues.votesNeeded));
+    callback(JSON.parse(game.dataValues.votesNeeded)[game.dataValues.missionNumber], JSON.parse(game.dataValues.votesNeeded), game.dataValues.voteTrack);
   });
 };
 

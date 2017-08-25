@@ -15,7 +15,6 @@ import AwaitAssassinScreen from './components/AwaitAssassinScreen.jsx';
 import MerlinChoiceScreen from './components/MerlinChoiceScreen.jsx';
 import InfoPanel from './components/InfoPanel.jsx';
 import openSocket from 'socket.io-client';
-import GameBoard from './components/GameBoard/GameBoard.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -390,17 +389,6 @@ class App extends React.Component {
   render () {
     return (
         <div>
-        <GameBoard
-          history = {[true, true, false]}
-          numPeopleOnMissions = {[2,3,2,3,3]}
-          voteTrack = {{
-            0: [false, false, false, false, true],
-            1: [true],
-            2: [false, false, true],
-            3: [false],
-            4: []
-          }}
-        />
         {this.screenDispatch[this.state.pageID]()}
       </div>)
   }
