@@ -1,5 +1,6 @@
 import React from 'react';
 import Cards from './Cards.jsx';
+import GameBoard from './GameBoard/GameBoard.jsx';
 
 class InfoPanel extends React.Component {
 
@@ -37,8 +38,13 @@ class InfoPanel extends React.Component {
     return (
       <div id="infoPanel">
         <div className="photos" style={styles}></div>
-        <div className="name"> You Are {name} </div>
-        {extraInfo}
+        <GameBoard
+          history = {[true, true, false]}
+          numPeopleOnMissions = {[2,3,2,3,3]}
+          currentMission = {[true, true, false].length}
+          voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          />
+        <p> {extraInfo} </p>
       </div>
     )
   }
