@@ -47,18 +47,6 @@ body {
   align-items: center;
 }
 
-.welcomeScreen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.welcomeScreen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 #playerEnterNameScreenInput .playerEnterNameScreenForm, #gameOwnerEnterNameScreenInput .gameOwnerEnterNameScreenForm  {
   display: flex;
   order: 1;
@@ -262,5 +250,4 @@ button:hover, .submit:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-<<<<<<< HEAD
 }*/

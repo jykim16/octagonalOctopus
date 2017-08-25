@@ -4,12 +4,12 @@ const _ = require('underscore');
 // key represents number of players.
 // values represent the different roles that will be played
 const roles = {
-  5: ['Mordred', 'Merlin', 'Loyal Servant', 'Loyal Servant', 'Minion of Mordred'],
-  6: ['Mordred', 'Merlin', 'Loyal Servant', 'Loyal Servant', 'Minion of Mordred', 'Loyal Servant'],
-  7: ['Mordred', 'Merlin', 'Loyal Servant', 'Loyal Servant', 'Minion of Mordred', 'Percival', 'Morgana'],
-  8: ['Mordred', 'Merlin', 'Loyal Servant', 'Loyal Servant', 'Minion of Mordred', 'Percival', 'Morgana', 'Loyal Servant'],
-  9: ['Mordred', 'Merlin', 'Loyal Servant', 'Loyal Servant', 'Minion of Mordred', 'Percival', 'Morgana', 'Loyal Servant', 'Oberon'],
-  10: ['Mordred', 'Merlin', 'Loyal Servant', 'Loyal Servant', 'Minion of Mordred', 'Percival', 'Morgana', 'Loyal Servant', 'Oberon', 'Loyal Servant'],
+  5: ['Mordred', 'Merlin', 'Loyal Servant_1', 'Loyal Servant_2', 'Minion of Mordred'],
+  6: ['Mordred', 'Merlin', 'Loyal Servant_1', 'Loyal Servant_2', 'Minion of Mordred', 'Loyal Servant_3'],
+  7: ['Mordred', 'Merlin', 'Loyal Servant_1', 'Loyal Servant_2', 'Minion of Mordred', 'Percival', 'Morgana'],
+  8: ['Mordred', 'Merlin', 'Loyal Servant_1', 'Loyal Servant_2', 'Minion of Mordred', 'Percival', 'Morgana', 'Loyal Servant_3'],
+  9: ['Mordred', 'Merlin', 'Loyal Servant_1', 'Loyal Servant_2', 'Minion of Mordred', 'Percival', 'Morgana', 'Loyal Servant_3', 'Oberon'],
+  10: ['Mordred', 'Merlin', 'Loyal Servant_1', 'Loyal Servant_2', 'Minion of Mordred', 'Percival', 'Morgana', 'Loyal Servant_3', 'Oberon', 'Loyal Servant_4'],
 }
 
 // key represents number of players.
@@ -90,6 +90,16 @@ module.exports.extraInfoAssignment = (userRoleMapping) => {
   var spies = ['The Spies Are: '];
   var shpies = ['The Spies Except Mordred Are: '];
   var merlinAndMorgana = ['Merlin and Morgana Are: '];
+
+  var players = ['The players are: '];
+
+  /*
+  { 'Minion of Mordred': [ '1', '0xQ50tVjCYAe-RyWAAAL' ],
+  Mordred: [ '2', 'aKNOdPUk8zRHgUkbAAAP' ],
+  'Loyal Servant': [ '5', 'Y9Ol8kqZuS7VMKgkAAAM' ],
+  Merlin: [ '4', 'oZs4fGGn-7HfrnljAAAN' ] }
+  */
+
   for (var prop in userRoleMapping) {
     if (prop === 'Minion of Mordred') {
       extraInfo[userRoleMapping[prop][1]] = spies;

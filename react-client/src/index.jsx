@@ -365,7 +365,6 @@ class App extends React.Component {
         />
       )},
 
-
     WelcomeScreen: ()=> {
 
       return (
