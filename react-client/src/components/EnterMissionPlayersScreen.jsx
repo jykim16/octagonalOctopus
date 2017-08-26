@@ -15,13 +15,6 @@ class EnterMissonPlayersScreen extends React.Component {
   }
 
   render() {
-    console.log("missionSize: ", this.props.missionSize
-    ,"role: ", this.props.role
-    ,"history: ", this.props.history
-    ,"socket: ", this.props.socket
-    ,"roomname: ", this.props.roomname
-    ,"history: ", this.props.history
-    ,"extraInfo: ", this.props.extraInfo);
     return (
       <div id="enterMissionPlayersScreen">
 
@@ -34,7 +27,7 @@ class EnterMissonPlayersScreen extends React.Component {
           currentMission = {this.props.questHistory.length}
           voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
           />
-        <MissionHistory history={this.props.history} numPeopleOnMissions={this.props.numPeopleOnMissions} missionHistory={this.props.history}  />
+         <MissionHistory missionHistory={this.props.history}  />
 
         <h5>
         Discuss Which {this.props.missionSize} Players to Send on the Mission and enter the results:
