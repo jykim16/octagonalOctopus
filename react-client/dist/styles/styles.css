@@ -76,6 +76,7 @@ body {
   flex-direction: row;
 }
 
+
 .leaveButton, .waitMessage {
   align-self: center;
 }
@@ -86,6 +87,13 @@ body {
 
 #enterMissionPlayersScreen button {
   align-self: center;
+}
+
+#hover-content {
+    display:none;
+}
+#parent:hover #hover-content {
+    display:block;
 }
 
 #notEnoughPlayersErr {
@@ -155,9 +163,8 @@ ol, table {
   font-size: 50px;
 }
 
-#tableRules{
-    table-layout: fixed;
-    width: 730px;
+.tableRules{
+  text-align: center;
 }
 
 input {
@@ -194,6 +201,7 @@ button {
   background-color: lightgrey;
   font-size: 3.5vw;
   font-family: 'Eagle Lake', cursive;
+
 }
 
 /****Hover on buttons turns text red****/
@@ -235,13 +243,23 @@ button:hover, .submit:hover {
   color: rgb(255, 255, 255, 1);
 }
 
-.photos{
-  width: 80%;
+
+
+div.bottom {
+  display: inline-block;
+  float: none;
+  text-align: left;
+
 }
 
-.photosRules{
-  width: 80%;
-  margin-left: 10%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+.row-fluid {
+  text-align: center;
 }
+
+
+/*.infoPanelParent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+<<<<<<< HEAD
+}*/

@@ -20,7 +20,7 @@ class InfoPanel extends React.Component {
     // if (!this.props.extraInfo) {
     //   var extraInfo = ''
     // } else {
-      
+
     //   var usernames = this.props.extraInfo.slice(1, this.props.extraInfo.length);
     //   var extraInfo = this.props.extraInfo[0] + usernames.join(', ');
     // }
