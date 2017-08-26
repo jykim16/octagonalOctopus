@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
         io.in(gameToken).emit('playerjoined', {allplayers})
         if (host) {
           database.getSocketId(allplayers[0], gameToken, (socketid) => {
-            database.updateHost(gameToken () => {
+            database.updateHost(gameToken, () => {
               socket.to(socketid).emit('become host', {});
             });
           });
@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
       database.getAllUsernames(gameToken, (allplayers) => {
         if (host) {
           database.getSocketId(allplayers[0], gameToken, (socketid) => {
-            database.updateHost(gameToken, socketid, () => {
+            database.updateHost(gameToken, () => {
               socket.to(socketid).emit('become host', {});
             });
           });
