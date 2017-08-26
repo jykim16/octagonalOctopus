@@ -28,7 +28,7 @@ class InfoPanel extends React.Component {
 
     return (
     <div id="infoPanel">
-      <h5> Info Panel </h5>
+      <h5> {name} </h5>
       <div className="photos" style={styles}></div>
       <p> {extraInfo} </p>
     </div>
