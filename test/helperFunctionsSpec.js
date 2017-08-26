@@ -60,16 +60,16 @@ describe('generateRoles', function() {
 //   })
 // })
 
-describe('gameOutcome', function() {
+describe('gameIsFinished', function() {
   it('should return true if spies lost', function(done){
     let missions = [true, true, true, false, false];
-    let results = helperFunctions.gameOutcome(missions);
+    let results = helperFunctions.gameIsFinished(missions);
     assert.equal(results, true);
     done();
   })
   it('should return false if spies won', function(done){
     let missions = [true, true, false, false, false];
-    let results = helperFunctions.gameOutcome(missions);
+    let results = helperFunctions.gameIsFinished(missions);
     assert.equal(results, false);
     done();
   })

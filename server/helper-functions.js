@@ -72,16 +72,20 @@ module.exports.generateRoles = (usernames) => {
   return userRoles;
 };
 
-module.exports.gameOutcome = (missionResults) => {
+module.exports.gameIsFinished = (missionResults) => {
   // given mission results array, determine if good people won (true)
 
   const neededFailures = 3;
+  const neededVictories = 3;
 
   // Filter out all false values. Take the length and
   // if it is greater than neededFailures return false (spies win).
-  if (missionResults.filter(e => !e).length >= neededFailures) { return false; }
-  // otherwise return true;
-  return true;
+  if (missionResults.filter(e => e === false).length >= neededFailures) {
+    return false;
+  } else if (missionResults.filter(e => e === true).length >= neededVictories) {
+    return true;
+  }
+  return 'notyet';
 };
 
 

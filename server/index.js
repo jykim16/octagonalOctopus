@@ -126,13 +126,17 @@ io.on('connection', (socket) => {
   socket.on('missionvote', (data) => {
     computeResult(data, (finalMissionResult, votesArray) => {
       database.updateResults(data.roomname, finalMissionResult, (results) => {
-        if (results.length < 5) {
+        // returns false if number of fails is 3 or more
+        // returns true if number of wins is 3 or more
+        // return 'notyet' otherwise
+        var threeWinsOrFails = helpers.gameIsFinished(results);
+        if (threeWinsOrFails === 'notyet' && results.length < 5) {
           database.nextMission(data.roomname, (votesNeeded) => {
             io.in(data.roomname).emit('missionresult', {results: votesArray, missionSize: votesNeeded});
           });
         } else {
-          var finalOutcome = helpers.gameOutcome(results);
-          if (finalOutcome) {
+          var finalOutcome = helpers.gameIsFinished(results);
+          if (finalOutcome === true) {
             io.in(data.roomname).emit('waitmerlinchoice', {});
             database.getMordred(data.roomname, (mordred) => {
               if (mordred.socketid === socket.id) {
