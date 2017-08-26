@@ -47,6 +47,7 @@ body {
   align-items: center;
 }
 
+
 #playerEnterNameScreenInput .playerEnterNameScreenForm, #gameOwnerEnterNameScreenInput .gameOwnerEnterNameScreenForm  {
   display: flex;
   order: 1;
@@ -163,9 +164,21 @@ ol, table {
   font-size: 50px;
 }
 
-.tableRules{
+.tableRules {
   text-align: center;
 }
+
+.photos {
+  width: 40%;
+  height: 30%;
+}
+.photosRules {
+ width: 80%;
+ margin-left: 10%;
+ margin-top: 5%;
+ margin-bottom: 5%;
+}
+
 
 input {
   margin: 5px;
@@ -243,8 +256,6 @@ button:hover, .submit:hover {
   color: rgb(255, 255, 255, 1);
 }
 
-
-
 div.bottom {
   display: inline-block;
   float: none;
@@ -256,10 +267,3 @@ div.bottom {
   text-align: center;
 }
 
-
-/*.infoPanelParent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-<<<<<<< HEAD
-}*/
