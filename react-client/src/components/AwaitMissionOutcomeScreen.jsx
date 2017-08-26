@@ -14,15 +14,13 @@ class AwaitMissionOutcomeScreen extends React.Component {
 
     return (
       <div id="awaitMissionOutcomeScreen">
-
-        <h3> Awaiting Mission Outcome </h3>
-
         <InfoPanel role={this.props.role} missionHistory={this.props.history} />
         <GameBoard
           history = {this.props.questHistory}
           numPeopleOnMissions = {this.props.numPeopleOnMissions}
           currentMission = {this.props.questHistory.length}
           voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          messageDisplay = {`Awaiting Mission Outcome...`}
           />
         <p></p>
 

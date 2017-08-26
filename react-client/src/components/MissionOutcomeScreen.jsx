@@ -16,23 +16,16 @@ class MissionOutcomeScreen extends React.Component {
 
     return (
       <div id="missionOutcome">
+        <InfoPanel role={this.props.role} missionHistory={this.props.history}  extraInfo = {this.props.extraInfo}/>
         <GameBoard
           history = {this.props.questHistory}
           numPeopleOnMissions = {this.props.numPeopleOnMissions}
           currentMission = {this.props.questHistory.length}
           voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          messageDisplay = {`Mission Outcome:\n
+            Fail votes: ${this.props.failVotes}\n
+            Success votes: ${this.props.successVotes}`}
           />
-        <h4> Mission Outcome  </h4>
-
-        <InfoPanel role={this.props.role} missionHistory={this.props.history}  extraInfo = {this.props.extraInfo}/>
-
-        <p>
-        Fail votes: {this.props.failVotes}
-        </p>
-
-        <p>
-        Success votes: {this.props.successVotes}
-        </p>
 
         <button onClick={this.nextPage}>
         Next Mission!

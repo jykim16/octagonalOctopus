@@ -34,18 +34,10 @@ class MissionVoteScreen extends React.Component {
           numPeopleOnMissions = {this.props.numPeopleOnMissions}
           currentMission = {this.props.questHistory.length}
           voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          messageDisplay = {`You are on a mission with ${this.props.missionPlayers.join(' and ') + '.'}\n
+            Do you want the mission to fail or succeed?`}
           />
 
-        <p> You are on a mission with</p>
-        <table >
-        {this.props.missionPlayers.map((player, index)=>{
-          return (<tr key={index}>{player}</tr>)
-        })}
-        </table>
-
-        <p>
-        Do you want the mission to fail or succeed?
-        </p>
         <div className="missionVoteScreenInput">
           <button className="missionFail" onClick={this.fail}>
             Fails

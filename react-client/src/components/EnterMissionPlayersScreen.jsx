@@ -18,20 +18,15 @@ class EnterMissonPlayersScreen extends React.Component {
     return (
       <div id="enterMissionPlayersScreen">
 
-        <h3> Decide who Goes on the Mission </h3>
-
         <InfoPanel role={this.props.role}   extraInfo = {this.props.extraInfo}/>
         <GameBoard
           history = {this.props.questHistory}
           numPeopleOnMissions = {this.props.numPeopleOnMissions}
           currentMission = {this.props.questHistory.length}
           voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          messageDisplay = {`Discuss Which ${this.props.missionSize} Players to Send on the Mission and enter the results:`}
           />
          <MissionHistory missionHistory={this.props.history}  />
-
-        <h5>
-        Discuss Which {this.props.missionSize} Players to Send on the Mission and enter the results:
-        </h5>
 
         <ul id="missionSelection">
         {this.props.players.map((player, index)=>{
