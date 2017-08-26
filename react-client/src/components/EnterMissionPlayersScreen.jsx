@@ -66,7 +66,7 @@ class EnterMissonPlayersScreen extends React.Component {
   sendNames(){
     // if the required number of boxes are selected then send players on mission.
     if ($("input[name='player']:checked").length === this.props.missionSize) {
-      this.props.socket.emit('missionparticipants', {participants: this.state.selected,
+      this.props.socket.emit('questApprovalNeeded', {host: this.props.hostName ,participants: this.state.selected,
       roomname: this.props.roomname});
     } else {
       // if more players are required then show error.

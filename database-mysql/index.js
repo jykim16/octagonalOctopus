@@ -58,6 +58,14 @@ const Game = sequelize.define('game', {
   voteTrack: {
     type: Sequelize.STRING,
     defaultValue: '{"0": [], "1": [], "2": [], "3": [], "4": []}'
+  },
+  hostChangeCounter: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  questApprovalVotes: {
+    type: Sequelize.STRING,
+    defaultValue: '[]'
   }
 })
 
@@ -70,6 +78,27 @@ module.exports.getResults = function(gameToken, callback) {
   .then((game) => {
     callback(JSON.parse(game.dataValues.results));
   })
+};
+
+module.exports.updateVoteTrack = function(gameToken, vote, callback) {
+  Game.findOne({where: {gameToken}})
+  .then((game) => {
+    var voteTrack = JSON.parse(game.dataValues.voteTrack);
+    voteTrack[game.dataValues.missionNumber].push(vote);
+    game.update({voteTrack: JSON.stringify(voteTrack)});
+    callback(voteTrack);
+  });
+};
+
+module.exports.addQuestVote = function(gameToken, vote, callback) {
+  Game.findOne({where: {gameToken}})
+  .then((game) => {
+    var votesArray = JSON.parse(game.dataValues.questApprovalVotes);
+    votesArray.push(vote);
+    votes = JSON.stringify(votesArray);
+    game.update({votes});
+    callback(game.dataValues.numParticipants, votesArray);
+  });
 };
 
 module.exports.addVote = function(gameToken, vote, callback) {
@@ -173,13 +202,26 @@ module.exports.getAllSocketIds = function(gameKey, callback) {
   });
 };
 
-module.exports.updateHost = function(gameKey, socketid, callback) {
-  User.findOne({where: {socketid, gameKey}})
-  .then((user) => {
-    var host = true;
-    user.update({host});
-  })
-  .then(callback)
+module.exports.updateHost = function(gameKey, callback) {
+  User.findAll({where: {gameKey, host: 0}})
+    .then((users) => {
+      Game.findOne({where: {gameKey}})
+        .then((game)=> {
+          counter = game.datavalues.hostChangeCounter;
+          game.update({hostChangeCounter: (counter++ % users.length)});
+          var user = users[counter];
+          var host = true;
+          User.findOne({where: {gameKey, host}})
+            .then((originalHost)=>{
+              originalHost.update({host: false});
+              User.findOne({where: {gameKey, username: user.dataValues.username}})
+                .then((newHost)=>{
+                  newHost.update({host});
+                })
+            })
+            .then(callback)
+        })
+      })
 }
 
 module.exports.getSocketId = function(username, gameKey, callback) {

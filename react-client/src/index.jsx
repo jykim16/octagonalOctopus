@@ -14,6 +14,8 @@ import AwaitAssassinScreen from './components/AwaitAssassinScreen.jsx';
 import MerlinChoiceScreen from './components/MerlinChoiceScreen.jsx';
 import InfoPanel from './components/InfoPanel.jsx';
 import openSocket from 'socket.io-client';
+import ApproveQuestScreen from './components/ApproveQuestScreen.jsx';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -68,6 +70,7 @@ class App extends React.Component {
       this.setState({role: data.role,
                     host: true,
                     history: data.history,
+                    hostName: data.hostName,
                     questHistory: data.history,
                     numPeopleOnMissions: data.numPeopleOnMissions,
                     voteTrack: "{}",
@@ -75,7 +78,7 @@ class App extends React.Component {
                     extraInfo: data.extraInfo,
                     pageID: 'EnterMissionPlayersScreen',
                     missionOutcome: [],
-                    gameOutcome: ''
+                    gameOutcome: '',
                   });
     });
 
@@ -94,8 +97,16 @@ class App extends React.Component {
                       extraInfo: data.extraInfo,
                       pageID: 'DiscussMissionPlayersScreen',
                       missionOutcome: [],
-                      gameOutcome: ''
+                      gameOutcome: '',
+                      hostName: data.hostName
                   });
+    });
+
+    //players vote on passing the quest members or not
+    this.socket.on('questApprovalNeeded', (data)=>{
+      this.setState({missionPlayers: data.missionPlayers,
+                      hostName: data.hostName,
+                      pageID: 'ApproveQuestScreen'});
     });
 
     //players on mission should go to voting page
@@ -186,6 +197,15 @@ class App extends React.Component {
       }
     });
 
+    this.socket.on('quest approved', (data) => {
+      if (this.state.host) {
+        this.setState({pageID: 'GameOwnerWaitingForPlayersScreen'}, () => {
+        });
+      } else {
+        this.setState({pageID: 'PlayerWaitingForPlayersScreen'}, () => {
+        });
+      }
+    });
     this.state = {
 
       pageID: 'WelcomeScreen',
@@ -224,7 +244,9 @@ class App extends React.Component {
 
       voteTrack: null,
 
-      questHistory: []
+      questHistory: [],
+
+      hostName: null
 
     };
 
@@ -386,6 +408,24 @@ class App extends React.Component {
         />
       )},
 
+    approveQuestScreen: () => {
+      return (
+        <ApproveQuestScreen
+          hostName = {this.state.hostName}
+          numPeopleOnMissions={this.state.numPeopleOnMissions}
+          questHistory= {this.state.questHistory}
+          voteTrack={"{}"}
+          players={this.players}
+          role={this.state.role}
+          history={this.state.missionOutcome}
+          socket={this.socket}
+          roomname={this.state.accessCode}
+          missionPlayers = {this.state.missionPlayers}
+          waiting={this.waitingPage}
+          extraInfo = {this.state.extraInfo}
+          />
+      )
+    }
 
     MissionVoteScreen: ()=> {
 

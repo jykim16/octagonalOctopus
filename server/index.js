@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
         io.in(gameToken).emit('playerjoined', {allplayers})
         if (host) {
           database.getSocketId(allplayers[0], gameToken, (socketid) => {
-            database.updateHost(gameToken, socketid, () => {
+            database.updateHost(gameToken () => {
               socket.to(socketid).emit('become host', {});
             });
           });
@@ -81,14 +81,16 @@ io.on('connection', (socket) => {
             }
             var extraInfoAssignment = helpers.extraInfoAssignment(userRoles);
             database.getResults(data.roomname,(history) => {
-              socket.emit('hoststart', {role: roles[socket.id], history: history, voteTrack: voteTrack, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socket.id]});
-              for (var i = 0; i < socketids.length; i++) {
-                database.assignRole(socketids[i], roles[socketids[i]], () => {
-                });
-                if (socketids[i] !== socket.id) {
-                  socket.to(socketids[i]).emit('playerstart', {role: roles[socketids[i]],  voteTrack: voteTrack, history: history, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socketids[i]]});
+              database.getHost(data.roomname, (host) => {
+                socket.emit('hoststart', {role: roles[socket.id], history: history, hostName: host, voteTrack: voteTrack, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socket.id]});
+                for (var i = 0; i < socketids.length; i++) {
+                  database.assignRole(socketids[i], roles[socketids[i]], () => {
+                  });
+                  if (socketids[i] !== socket.id) {
+                    socket.to(socketids[i]).emit('playerstart', {role: roles[socketids[i]], hostName: host, voteTrack: voteTrack, history: history, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socketids[i]]});
+                  }
                 }
-              }
+              })
             });
           });
         });
@@ -109,6 +111,7 @@ io.on('connection', (socket) => {
     };
   });
 
+//may be blocking server because callback is only called in once all votes are in.
   const computeResult = (data, callback) => {
     database.addVote(data.roomname, data.vote, (votesArray) => {
       database.votesNeeded(data.roomname, (votesNeeded) => {
@@ -121,6 +124,43 @@ io.on('connection', (socket) => {
       });
     });
   };
+
+  const computeQuestResult = (data, callback) => {
+      database.addQuestVote(data.roomname, data.vote, (numPlayers, questApprovalArray)=>{
+        if (numPlayers === questApprovalArray.length) {
+            var finalQuestProposalResult = helpers.questMemberApproval(numPlayers, questApprovalArray);
+            callback(true, finalQuestProposalResult, questApprovalArray);
+        }
+        callback(false);
+      });
+    });
+  };
+
+  socket.on('questvote', (data) => {
+    computeQuestResult(data, (isFinalVote, finalQuestProposalResult, votesArray) => {
+        if(isFinalVote) {
+          if (finalQuestProposalResult) {
+            //add approved to board
+            database.updateVoteTrack(data.roomname, true, (voteTrack) => {
+              io.in(data.roomname).emit('nomissionwaiting', {missionPlayers: data.participants})
+              for (var i = 0; i < data.participants.length; i++) {
+                database.getSocketId(data.participants[i], data.roomname, (socketid) => {
+                  if (socketid === socket.id) {
+                    socket.emit('missionvote', {missionPlayers: data.participants})
+                  } else {
+                    socket.to(socketid).emit('missionvote', {missionPlayers: data.participants});
+                  }
+                });
+              };
+            });
+          } else {
+
+            //change host and add dissapproved to board and send back to entermissionplayer
+
+          }
+        }
+    });
+  });
 
   socket.on('missionvote', (data) => {
     computeResult(data, (finalMissionResult, votesArray) => {

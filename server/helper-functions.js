@@ -38,6 +38,16 @@ const numFailuresNeeded = {
   10: [1,1,1,2,1]
 }
 
+module.exports.questMemberApproval = (playerCount, votesArray) => {
+  var numFailures = 0;
+  for (var i = 0; i < votesArray.length; i++) {
+    if (!votesArray[i]) {
+      numFailures++
+    }
+  }
+  return !(numFailures > playerCount/2);
+};
+
 module.exports.missionResult = (playerCount, roundNum, votesArray) => {
   var numFailures = 0;
   for (var i = 0; i < votesArray.length; i++) {
