@@ -2,6 +2,7 @@ import React from 'react';
 
 import InfoPanel from './InfoPanel.jsx';
 import Timer from './Timer.jsx';
+import GameBoard from './GameBoard/GameBoard.jsx';
 
 class MerlinChoiceScreen extends React.Component {
 
@@ -28,16 +29,21 @@ class MerlinChoiceScreen extends React.Component {
 
     return (
       <div id="merlinChoiceScreen">
-
+        <GameBoard
+          history = {this.props.questHistory}
+          numPeopleOnMissions = {this.props.numPeopleOnMissions}
+          currentMission = {this.props.questHistory.length}
+          voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          />
         <h3> Choose Your Merlin </h3>
 
         <InfoPanel role={this.props.role} missionHistory={this.props.history} />
 
-        
+
 
          <form onSubmit={this.handleSubmit}>
         <label>
-          
+
           <select value={this.state.value} onChange={this.handleChange}>
           <option>please select</option>
           {this.props.players.map((player, index)=>{

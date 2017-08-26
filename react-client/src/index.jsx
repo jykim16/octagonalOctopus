@@ -66,7 +66,9 @@ class App extends React.Component {
       this.setState({role: data.role,
                     host: true,
                     history: data.history,
+                    questHistory: data.history,
                     numPeopleOnMissions: data.numPeopleOnMissions,
+                    voteTrack: "{}",
                     missionSize: data.missionSize,
                     extraInfo: data.extraInfo,
                     pageID: 'EnterMissionPlayersScreen',
@@ -78,8 +80,11 @@ class App extends React.Component {
     //players should be moved to the next page after host starts
     this.socket.on('playerstart', (data)=>{
       this.setState({role: data.role,
-                      history: history,
-                      numPeopleOnMissions: numPeopleOnMissions,
+                      history: data.history,
+                      questHistory: data.history,
+                      numPeopleOnMissions: data.numPeopleOnMissions,
+                      voteTrack: "{}",
+                      voteTrack: data.voteTrack,
                       missionSize: data.missionSize,
                       extraInfo: data.extraInfo,
                       pageID: 'DiscussMissionPlayersScreen',
@@ -112,12 +117,12 @@ class App extends React.Component {
         vote ? pass++ : fail++;
       });
       var history = [`${pass} pass ${fail} fail`];
-
-
       this.setState({failVotes: fail,
                       successVotes: pass,
                       missionSize: data.missionSize,
+                      numPeopleOnMissions: this.state.numPeopleOnMissions,
                       missionOutcome: this.state.missionOutcome.concat([history]),
+                      questHistory: data.questHistory,
                       pageID: 'MissionOutcomeScreen'});
     });
 
@@ -138,7 +143,10 @@ class App extends React.Component {
     });
 
     this.socket.on('waitmerlinchoice', (data) => {
-      this.setState({pageID: 'AwaitAssassinScreen'});
+      this.setState({
+        pageID: 'AwaitAssassinScreen'
+
+      });
     });
 
     this.socket.on('finaloutcome', (data) => {
@@ -207,6 +215,12 @@ class App extends React.Component {
 
       extraInfo: null,
 
+      numPeopleOnMissions: null,
+
+      voteTrack: null,
+
+      questHistory: []
+
     };
 
   this.screenDispatch = {
@@ -231,11 +245,14 @@ class App extends React.Component {
 
       return (
         <AwaitAssassinScreen
-        role={this.state.role}
-        history={this.state.missionOutcome}
-        spyCount={this.state.spyCount}
-        socket={this.socket}
-        roomname={this.state.accessCode}
+          numPeopleOnMissions={this.state.numPeopleOnMissions}
+          questHistory= {this.state.questHistory}
+          voteTrack={"{}"}
+          role={this.state.role}
+          history={this.state.missionOutcome}
+          spyCount={this.state.spyCount}
+          socket={this.socket}
+          roomname={this.state.accessCode}
         />
       )},
 
@@ -243,11 +260,14 @@ class App extends React.Component {
 
       return (
         <AwaitMissionOutcomeScreen
-        role={this.state.role}
-        history={this.state.missionOutcome}
-        socket={this.socket}
-        roomname={this.state.accessCode}
-        host={this.state.host}
+          numPeopleOnMissions={this.state.numPeopleOnMissions}
+          questHistory= {this.state.questHistory}
+          voteTrack={"{}"}
+          role={this.state.role}
+          history={this.state.missionOutcome}
+          socket={this.socket}
+          roomname={this.state.accessCode}
+          host={this.state.host}
         />
       )},
 
@@ -255,12 +275,15 @@ class App extends React.Component {
     DiscussMissionPlayersScreen: ()=> {
       return (
         <DiscussMissionPlayersScreen
-        missionSize={this.state.missionSize}
-        role={this.state.role}
-        socket={this.socket}
-        roomname={this.state.accessCode}
-        history={this.state.missionOutcome}
-        extraInfo = {this.state.extraInfo}
+          numPeopleOnMissions={this.state.numPeopleOnMissions}
+          questHistory= {this.state.questHistory}
+          voteTrack={"{}"}
+          missionSize={this.state.missionSize}
+          role={this.state.role}
+          socket={this.socket}
+          roomname={this.state.accessCode}
+          history={this.state.missionOutcome}
+          extraInfo = {this.state.extraInfo}
         />
       )},
 
@@ -269,13 +292,16 @@ class App extends React.Component {
 
       return (
         <EnterMissionPlayersScreen
-        missionSize={this.state.missionSize}
-        role={this.state.role}
-        history={this.state.missionOutcome}
-        socket={this.socket}
-        players={this.state.players}
-        roomname={this.state.accessCode}
-        extraInfo = {this.state.extraInfo}
+          numPeopleOnMissions={this.state.numPeopleOnMissions}
+          questHistory= {this.state.questHistory}
+          voteTrack={"{}"}
+          missionSize={this.state.missionSize}
+          role={this.state.role}
+          history={this.state.missionOutcome}
+          socket={this.socket}
+          players={this.state.players}
+          roomname={this.state.accessCode}
+          extraInfo = {this.state.extraInfo}
         />
 
       )},
@@ -315,12 +341,15 @@ class App extends React.Component {
 
       return (
         <MerlinChoiceScreen
-        players={this.state.players}
-        role={this.state.role}
-        history={this.state.missionOutcome}
-        spyCount={this.state.spyCount}
-        socket={this.socket}
-        roomname={this.state.accessCode}
+          numPeopleOnMissions={this.state.numPeopleOnMissions}
+          questHistory= {this.state.questHistory}
+          voteTrack={"{}"}
+          players={this.state.players}
+          role={this.state.role}
+          history={this.state.missionOutcome}
+          spyCount={this.state.spyCount}
+          socket={this.socket}
+          roomname={this.state.accessCode}
         />
       )},
 
@@ -330,15 +359,18 @@ class App extends React.Component {
       return (
 
         <MissionOutcomeScreen
-        role={this.state.role}
-        history={this.state.missionOutcome}
-        failVotes={this.state.failVotes}
-        successVotes={this.state.successVotes}
-        socket={this.socket}
-        roomname={this.state.accessCode}
-        nextPage={this.nextPage}
-        host = {this.state.host}
-        extraInfo = {this.state.extraInfo}
+          numPeopleOnMissions={this.state.numPeopleOnMissions}
+          questHistory= {this.state.questHistory}
+          voteTrack={"{}"}
+          role={this.state.role}
+          history={this.state.missionOutcome}
+          failVotes={this.state.failVotes}
+          successVotes={this.state.successVotes}
+          socket={this.socket}
+          roomname={this.state.accessCode}
+          nextPage={this.nextPage}
+          host = {this.state.host}
+          extraInfo = {this.state.extraInfo}
         />
       )},
 
@@ -347,14 +379,17 @@ class App extends React.Component {
 
       return (
         <MissionVoteScreen
-        players={this.players}
-        role={this.state.role}
-        history={this.state.missionOutcome}
-        socket={this.socket}
-        roomname={this.state.accessCode}
-        missionPlayers = {this.state.missionPlayers}
-        waiting={this.waitingPage}
-        extraInfo = {this.state.extraInfo}
+          numPeopleOnMissions={this.state.numPeopleOnMissions}
+          questHistory= {this.state.questHistory}
+          voteTrack={"{}"}
+          players={this.players}
+          role={this.state.role}
+          history={this.state.missionOutcome}
+          socket={this.socket}
+          roomname={this.state.accessCode}
+          missionPlayers = {this.state.missionPlayers}
+          waiting={this.waitingPage}
+          extraInfo = {this.state.extraInfo}
         />
       )},
 

@@ -86,7 +86,7 @@ io.on('connection', (socket) => {
                 database.assignRole(socketids[i], roles[socketids[i]], () => {
                 });
                 if (socketids[i] !== socket.id) {
-                  socket.to(socketids[i]).emit('playerstart', {role: roles[socketids[i]], history: history, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socketids[i]]});
+                  socket.to(socketids[i]).emit('playerstart', {role: roles[socketids[i]],  voteTrack: voteTrack, history: history, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socketids[i]]});
                 }
               }
             });
@@ -109,7 +109,7 @@ io.on('connection', (socket) => {
     };
   });
 
-    const computeResult = (data, callback) => {
+  const computeResult = (data, callback) => {
     database.addVote(data.roomname, data.vote, (votesArray) => {
       database.votesNeeded(data.roomname, (votesNeeded) => {
         if (votesArray.length === votesNeeded) {
@@ -127,17 +127,17 @@ io.on('connection', (socket) => {
       database.updateResults(data.roomname, finalMissionResult, (results) => {
         if (results.length < 5) {
           database.nextMission(data.roomname, (votesNeeded) => {
-            io.in(data.roomname).emit('missionresult', {results: votesArray, missionSize: votesNeeded});
+            io.in(data.roomname).emit('missionresult', {results: votesArray, missionSize: votesNeeded, questHistory: results});
           });
         } else {
           var finalOutcome = helpers.gameOutcome(results);
           if (finalOutcome) {
-            io.in(data.roomname).emit('waitmerlinchoice', {});
+            io.in(data.roomname).emit('waitmerlinchoice', { questHistory: results});
             database.getMordred(data.roomname, (mordred) => {
               if (mordred.socketid === socket.id) {
-                socket.emit('entermerlin', {results: votesArray});
+                socket.emit('entermerlin', {results: votesArray, questHistory: results});
               } else{
-                  socket.to(mordred.socketid).emit('entermerlin', {results: votesArray});
+                  socket.to(mordred.socketid).emit('entermerlin', {results: votesArray, questHistory: results});
               }
             });
           } else {
@@ -147,7 +147,7 @@ io.on('connection', (socket) => {
                 allPlayers[users[i].dataValues.username] = users[i].dataValues.role;
               }
               var results = votesArray;
-              io.in(data.roomname).emit('finaloutcome', {finalOutcome, results, allPlayers});
+              io.in(data.roomname).emit('finaloutcome', {finalOutcome, results, allPlayers, questHistory: results});
             });
           }
         }
