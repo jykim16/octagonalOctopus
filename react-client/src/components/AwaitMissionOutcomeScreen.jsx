@@ -19,7 +19,7 @@ class AwaitMissionOutcomeScreen extends React.Component {
           history = {this.props.questHistory}
           numPeopleOnMissions = {this.props.numPeopleOnMissions}
           currentMission = {this.props.questHistory.length}
-          voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          voteTrack={this.props.voteTrack}
           messageDisplay = {`Awaiting Mission Outcome...`}
           />
         <p></p>

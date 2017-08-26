@@ -73,13 +73,29 @@ class App extends React.Component {
                     hostName: data.hostName,
                     questHistory: data.history,
                     numPeopleOnMissions: data.numPeopleOnMissions,
-                    voteTrack: "{}",
+                    voteTrack: data.voteTrack,
                     missionSize: data.missionSize,
                     extraInfo: data.extraInfo,
                     pageID: 'EnterMissionPlayersScreen',
                     missionOutcome: [],
                     gameOutcome: '',
                   });
+    });
+
+    this.socket.on('nextroundhoststart', (data)=>{
+      this.setState({
+        hostName: data.hostName,
+        voteTrack: data.voteTrack,
+        pageID: 'EnterMissionPlayersScreen'
+      });
+    });
+
+    this.socket.on('nextroundplayerstart', (data)=>{
+      this.setState({
+        hostName: data.hostName,
+        voteTrack: data.voteTrack,
+        pageID: 'DiscussMissionPlayersScreen'
+        });
     });
 
     //players should be moved to the next page after host starts
@@ -91,7 +107,6 @@ class App extends React.Component {
                       history: data.history,
                       questHistory: data.history,
                       numPeopleOnMissions: data.numPeopleOnMissions,
-                      voteTrack: "{}",
                       voteTrack: data.voteTrack,
                       missionSize: data.missionSize,
                       extraInfo: data.extraInfo,
@@ -104,7 +119,7 @@ class App extends React.Component {
 
     //players vote on passing the quest members or not
     this.socket.on('questApprovalNeeded', (data)=>{
-      this.setState({missionPlayers: data.missionPlayers,
+      this.setState({missionPlayers: data.participants,
                       hostName: data.hostName,
                       pageID: 'ApproveQuestScreen'});
     });
@@ -112,7 +127,9 @@ class App extends React.Component {
     //players on mission should go to voting page
     this.socket.on('missionvote', (data)=>{
       this.setState({missionPlayers: data.missionPlayers,
-                      pageID: 'MissionVoteScreen'});
+                    pageID: 'MissionVoteScreen',
+                    hostName: data.hostName,
+                    roomname: data.roomname});
     });
 
     //players not on mission go here i dont need data i just need you to emit to setState
@@ -136,7 +153,6 @@ class App extends React.Component {
       this.setState({failVotes: fail,
                       successVotes: pass,
                       missionSize: data.missionSize,
-                      numPeopleOnMissions: this.state.numPeopleOnMissions,
                       missionOutcome: this.state.missionOutcome.concat([history]),
                       questHistory: data.questHistory,
                       pageID: 'MissionOutcomeScreen'});
@@ -242,7 +258,7 @@ class App extends React.Component {
 
       numPeopleOnMissions: null,
 
-      voteTrack: null,
+      voteTrack: '{"0":[], "1":[], "2":[], "3":[], "4":[]}',
 
       questHistory: [],
 
@@ -274,7 +290,7 @@ class App extends React.Component {
         <AwaitAssassinScreen
           numPeopleOnMissions={this.state.numPeopleOnMissions}
           questHistory= {this.state.questHistory}
-          voteTrack={"{}"}
+          voteTrack={this.state.voteTrack}
           role={this.state.role}
           history={this.state.missionOutcome}
           spyCount={this.state.spyCount}
@@ -289,7 +305,7 @@ class App extends React.Component {
         <AwaitMissionOutcomeScreen
           numPeopleOnMissions={this.state.numPeopleOnMissions}
           questHistory= {this.state.questHistory}
-          voteTrack={"{}"}
+          voteTrack={this.state.voteTrack}
           role={this.state.role}
           history={this.state.missionOutcome}
           socket={this.socket}
@@ -307,7 +323,7 @@ class App extends React.Component {
         <DiscussMissionPlayersScreen
           numPeopleOnMissions={this.state.numPeopleOnMissions}
           questHistory= {this.state.questHistory}
-          voteTrack={"{}"}
+          voteTrack={this.state.voteTrack}
           missionSize={this.state.missionSize}
           role={this.state.role}
           socket={this.socket}
@@ -326,7 +342,7 @@ class App extends React.Component {
         <EnterMissionPlayersScreen
           numPeopleOnMissions={this.state.numPeopleOnMissions}
           questHistory= {this.state.questHistory}
-          voteTrack={"{}"}
+          voteTrack={this.state.voteTrack}
           missionSize={this.state.missionSize}
           role={this.state.role}
           history={this.state.missionOutcome}
@@ -375,7 +391,7 @@ class App extends React.Component {
         <MerlinChoiceScreen
           numPeopleOnMissions={this.state.numPeopleOnMissions}
           questHistory= {this.state.questHistory}
-          voteTrack={"{}"}
+          voteTrack={this.state.voteTrack}
           players={this.state.players}
           role={this.state.role}
           history={this.state.missionOutcome}
@@ -395,7 +411,7 @@ class App extends React.Component {
         <MissionOutcomeScreen
           numPeopleOnMissions={this.state.numPeopleOnMissions}
           questHistory= {this.state.questHistory}
-          voteTrack={"{}"}
+          voteTrack={this.state.voteTrack}
           role={this.state.role}
           history={this.state.missionOutcome}
           failVotes={this.state.failVotes}
@@ -408,13 +424,13 @@ class App extends React.Component {
         />
       )},
 
-    approveQuestScreen: () => {
+    ApproveQuestScreen: () => {
       return (
         <ApproveQuestScreen
           hostName = {this.state.hostName}
           numPeopleOnMissions={this.state.numPeopleOnMissions}
           questHistory= {this.state.questHistory}
-          voteTrack={"{}"}
+          voteTrack={this.state.voteTrack}
           players={this.players}
           role={this.state.role}
           history={this.state.missionOutcome}
@@ -424,8 +440,8 @@ class App extends React.Component {
           waiting={this.waitingPage}
           extraInfo = {this.state.extraInfo}
           />
-      )
-    }
+      );
+    },
 
     MissionVoteScreen: ()=> {
 
@@ -435,7 +451,7 @@ class App extends React.Component {
         <MissionVoteScreen
           numPeopleOnMissions={this.state.numPeopleOnMissions}
           questHistory= {this.state.questHistory}
-          voteTrack={"{}"}
+          voteTrack={this.state.voteTrack}
           players={this.players}
           role={this.state.role}
           history={this.state.missionOutcome}

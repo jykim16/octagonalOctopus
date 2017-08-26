@@ -86,7 +86,7 @@ module.exports.updateVoteTrack = function(gameToken, vote, callback) {
     var voteTrack = JSON.parse(game.dataValues.voteTrack);
     voteTrack[game.dataValues.missionNumber].push(vote);
     game.update({voteTrack: JSON.stringify(voteTrack)});
-    callback(voteTrack);
+    callback(JSON.stringify(voteTrack));
   });
 };
 
@@ -96,8 +96,15 @@ module.exports.addQuestVote = function(gameToken, vote, callback) {
     var votesArray = JSON.parse(game.dataValues.questApprovalVotes);
     votesArray.push(vote);
     votes = JSON.stringify(votesArray);
-    game.update({votes});
+    game.update({questApprovalVotes: votes});
     callback(game.dataValues.numParticipants, votesArray);
+  });
+};
+
+module.exports.resetQuestVote = function(gameToken) {
+  Game.findOne({where: {gameToken}})
+  .then((game) => {
+    game.update({questApprovalVotes: "[]"});
   });
 };
 
@@ -203,25 +210,48 @@ module.exports.getAllSocketIds = function(gameKey, callback) {
 };
 
 module.exports.updateHost = function(gameKey, callback) {
-  User.findAll({where: {gameKey, host: 0}})
-    .then((users) => {
-      Game.findOne({where: {gameKey}})
-        .then((game)=> {
-          counter = game.datavalues.hostChangeCounter;
-          game.update({hostChangeCounter: (counter++ % users.length)});
-          var user = users[counter];
-          var host = true;
-          User.findOne({where: {gameKey, host}})
-            .then((originalHost)=>{
-              originalHost.update({host: false});
-              User.findOne({where: {gameKey, username: user.dataValues.username}})
-                .then((newHost)=>{
-                  newHost.update({host});
+  var gameToken = gameKey;
+  Game.findOne({where: {gameToken}})
+    .then(game => {
+      var counter = game.dataValues.hostChangeCounter;
+console.log('counter: ', counter);
+      User.findAll({where: {gameKey, host: false}, order: sequelize.col('createdAt')})
+        .then(nonHostUsers => {
+console.log('nonhostusers: ', nonHostUsers);
+          var newHost = nonHostUsers[counter].dataValues;
+          game.update({hostChangeCounter: (++counter % nonHostUsers.length)});
+          User.findOne({where: {gameKey, host: true}})
+            .then(oldHost => {
+console.log('oldhost: ', oldHost.dataValues)
+              oldHost.update({host:false});
+              User.findOne({where: {gameKey, username: newHost.username}})
+                .then(foundNewHost => {
+console.log(foundNewHost.dataValues);
+                  foundNewHost.update({host: true})
+                   .then(callback(foundNewHost.dataValues));
                 })
             })
-            .then(callback)
         })
-      })
+    })
+  // User.findAll({where: {gameKey, host: 0}})
+  //   .then((users) => {
+  //     Game.findOne({where: {gameToken}})
+  //       .then((game)=> {
+  //         var counter = game.hostChangeCounter;
+  //         game.update({hostChangeCounter: (counter++ % users.length)});
+  //         var user = users[counter];
+  //         var host = true;
+  //         User.findOne({where: {gameKey, host}})
+  //           .then((originalHost)=>{
+  //             originalHost.update({host: false});
+  //             User.findOne({where: {gameKey, username: user.username}})
+  //               .then((newHost)=>{
+  //                 newHost.update({host});
+  //                 callback(newHost);
+  //               })
+  //           })
+  //       })
+  //     })
 }
 
 module.exports.getSocketId = function(username, gameKey, callback) {

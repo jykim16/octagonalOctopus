@@ -15,11 +15,11 @@ class ApproveQuestScreen extends React.Component {
   }
 
   fail(){
-    this.props.socket.emit('quest vote', {roomname:this.props.roomname, vote: false });
+    this.props.socket.emit('quest vote', {participants: this.props.missionPlayers,roomname:this.props.roomname, vote: false });
     this.props.waiting();
   }
   succeed() {
-    this.props.socket.emit('quest vote', {roomname:this.props.roomname, vote: true });
+    this.props.socket.emit('quest vote', {participants: this.props.missionPlayers, roomname:this.props.roomname, vote: true });
     this.props.waiting();
   }
 
@@ -32,7 +32,7 @@ class ApproveQuestScreen extends React.Component {
           history = {this.props.questHistory}
           numPeopleOnMissions = {this.props.numPeopleOnMissions}
           currentMission = {this.props.questHistory.length}
-          voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          voteTrack= {this.props.voteTrack}
           messageDisplay = {`${this.props.hostName} has proposed ${this.props.missionPlayers.join(' and ')} to go on the mission. Do you approve or reject this proposal?`}
           />
          <MissionHistory missionHistory={this.props.history}  />

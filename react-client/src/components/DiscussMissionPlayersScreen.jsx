@@ -20,7 +20,7 @@ class DiscussMissionPlayersScreen extends React.Component {
           history = {this.props.questHistory}
           numPeopleOnMissions = {this.props.numPeopleOnMissions}
           currentMission = {this.props.questHistory.length}
-          voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          voteTrack={this.props.voteTrack}
           messageDisplay = {`${this.props.hostName} is deciding on who to send on the quest...`}
           />
         <MissionHistory missionHistory={this.props.history} />

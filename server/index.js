@@ -98,6 +98,10 @@ io.on('connection', (socket) => {
     });
   });
 
+  socket.on('questApprovalNeeded', (data) => {
+    io.in(data.roomname).emit('questApprovalNeeded', data);
+  });
+
   socket.on('missionparticipants', (data) => {
     io.in(data.roomname).emit('nomissionwaiting', {})
     for (var i = 0; i < data.participants.length; i++) {
@@ -126,37 +130,44 @@ io.on('connection', (socket) => {
   };
 
   const computeQuestResult = (data, callback) => {
-      database.addQuestVote(data.roomname, data.vote, (numPlayers, questApprovalArray)=>{
-        if (numPlayers === questApprovalArray.length) {
-            var finalQuestProposalResult = helpers.questMemberApproval(numPlayers, questApprovalArray);
-            callback(true, finalQuestProposalResult, questApprovalArray);
-        }
-        callback(false);
-      });
+    console.log('compute data: ', data);
+    database.addQuestVote(data.roomname, data.vote, (numPlayers, questApprovalArray)=>{
+      if (numPlayers === questApprovalArray.length) {
+        database.resetQuestVote(data.roomname);
+        var questProposalPassed = helpers.questMemberApproval(numPlayers, questApprovalArray);
+        callback(true, questProposalPassed, questApprovalArray);
+      }
+      callback(false);
     });
   };
 
-  socket.on('questvote', (data) => {
-    computeQuestResult(data, (isFinalVote, finalQuestProposalResult, votesArray) => {
+  socket.on('quest vote', (data) => {
+    computeQuestResult(data, (isFinalVote, questProposalPassed, votesArray) => {
         if(isFinalVote) {
-          if (finalQuestProposalResult) {
+          if (questProposalPassed) {
             //add approved to board
             database.updateVoteTrack(data.roomname, true, (voteTrack) => {
-              io.in(data.roomname).emit('nomissionwaiting', {missionPlayers: data.participants})
-              for (var i = 0; i < data.participants.length; i++) {
-                database.getSocketId(data.participants[i], data.roomname, (socketid) => {
-                  if (socketid === socket.id) {
-                    socket.emit('missionvote', {missionPlayers: data.participants})
-                  } else {
-                    socket.to(socketid).emit('missionvote', {missionPlayers: data.participants});
-                  }
-                });
-              };
+              database.updateHost(data.roomname, (hostName) => {
+                io.in(data.roomname).emit('nomissionwaiting', {voteTrack, hostName, missionPlayers: data.participants})
+                for (var i = 0; i < data.participants.length; i++) {
+                  database.getSocketId(data.participants[i], data.roomname, (socketid) => {
+                    socket.to(socketid).emit('missionvote', {voteTrack, hostName, missionPlayers: data.participants});
+                  });
+                };
+              });
             });
           } else {
-
             //change host and add dissapproved to board and send back to entermissionplayer
-
+            database.updateVoteTrack(data.roomname, false, (voteTrack) => {
+              database.updateHost(data.roomname, (hostName) => {
+                //need to emit to return to entermissionplayer for host and discussmissionplayer for nonhost
+                var host = hostName.username;
+                var hostSocketId = hostName.socketid;
+                console.log('voteTrack in db: ', voteTrack)
+                socket.emit('nextroundplayerstart', {hostName: host, voteTrack: voteTrack});
+                socket.to(hostSocketId).emit('nextroundhoststart', {hostName: host, voteTrack: voteTrack});
+              });
+            });
           }
         }
     });

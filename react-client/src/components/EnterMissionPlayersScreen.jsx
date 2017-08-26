@@ -23,7 +23,7 @@ class EnterMissonPlayersScreen extends React.Component {
           history = {this.props.questHistory}
           numPeopleOnMissions = {this.props.numPeopleOnMissions}
           currentMission = {this.props.questHistory.length}
-          voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          voteTrack={this.props.voteTrack}
           messageDisplay = {`Discuss Which ${this.props.missionSize} Players to Send on the Mission and enter the results:`}
           />
          <MissionHistory missionHistory={this.props.history}  />
@@ -66,8 +66,9 @@ class EnterMissonPlayersScreen extends React.Component {
   sendNames(){
     // if the required number of boxes are selected then send players on mission.
     if ($("input[name='player']:checked").length === this.props.missionSize) {
-      this.props.socket.emit('questApprovalNeeded', {host: this.props.hostName ,participants: this.state.selected,
-      roomname: this.props.roomname});
+      console.log('sending Names for approval from socket: ', this.props.socket)
+
+      this.props.socket.emit('questApprovalNeeded', {host: this.props.hostName ,participants: this.state.selected, roomname: this.props.roomname});
     } else {
       // if more players are required then show error.
       $('#errDiv').empty();
