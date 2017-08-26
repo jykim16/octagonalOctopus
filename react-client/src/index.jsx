@@ -65,6 +65,9 @@ class App extends React.Component {
 
     //host presses start and moves to page where he can enter the names
     this.socket.on('hoststart', (data)=>{
+
+      console.log('hoststart: ', data.extraInfo);
+
       this.setState({role: data.role,
                     host: true,
                     missionSize: data.missionSize,
@@ -77,6 +80,9 @@ class App extends React.Component {
 
     //players should be moved to the next page after host starts
     this.socket.on('playerstart', (data)=>{
+
+      console.log('playerstart: ', data.extraInfo);
+
       this.setState({role: data.role,
                       missionSize: data.missionSize,
                       extraInfo: data.extraInfo,
@@ -245,11 +251,15 @@ class App extends React.Component {
         socket={this.socket}
         roomname={this.state.accessCode}
         host={this.state.host}
+        
         />
       )},
 
 
     DiscussMissionPlayersScreen: ()=> {
+
+      console.log('DiscussMissionPlayersScreen: ', this.state.extraInfo);
+
       return (
         <DiscussMissionPlayersScreen
         missionSize={this.state.missionSize}
@@ -263,6 +273,8 @@ class App extends React.Component {
 
 
     EnterMissionPlayersScreen: ()=> {
+
+      console.log('EnterMissionPlayersScreen: ', this.state.extraInfo);
 
       return (
         <EnterMissionPlayersScreen
@@ -324,6 +336,8 @@ class App extends React.Component {
 
     MissionOutcomeScreen: ()=> {
 
+      console.log('MissionOutcomeScreen: ', this.state.extraInfo);
+
       return (
 
         <MissionOutcomeScreen
@@ -341,6 +355,8 @@ class App extends React.Component {
 
 
     MissionVoteScreen: ()=> {
+
+      console.log('MissionVoteScreen: ', this.state.extraInfo);
 
       return (
         <MissionVoteScreen
@@ -364,6 +380,7 @@ class App extends React.Component {
         roomname={this.state.accessCode}
         />
       )},
+
 
     WelcomeScreen: ()=> {
 

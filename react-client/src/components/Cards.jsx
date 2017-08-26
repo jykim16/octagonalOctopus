@@ -20,6 +20,10 @@ class Cards extends React.Component {
     }
     */
 
+
+    
+    
+
     return (
     <div id="cards">
       <table id="tableRules">
@@ -37,7 +41,7 @@ class Cards extends React.Component {
             <td><div className="photosRules" style={{content: `url(/styles/Resources/merlin.png)`}} ></div></td>
           </tr>
           <tr>
-            <td style={{fontSize:'35px'}}>Mordred is: {mordredTeam.mordred[0]}</td>
+            <td style={{fontSize:'35px'}}>Mordred is: {mordredTeam.mordred.join(' or ')}</td>
             <td style={{fontSize:'35px'}}>Merlin is: {merlinTeam.merlin[0]}</td>
           </tr>
           <tr>

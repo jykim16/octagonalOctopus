@@ -18,7 +18,7 @@ class DiscussMissionPlayersScreen extends React.Component {
 
         <MissionHistory missionHistory={this.props.history} />
 
-         <h3> Discuss Which {this.props.missionSize} Players to Send on the Mission </h3>
+        <h3> Discuss Which {this.props.missionSize} Players to Send on the Mission </h3>
 
 
       </div>
