@@ -43,6 +43,7 @@ class WelcomeScreen extends React.Component {
         <div id="rules">
 
           <table id="tableRules">
+          <tbody>
             <tr>
               <th>Mordred Team</th>
               <th>Merlin Team</th>
@@ -83,6 +84,7 @@ class WelcomeScreen extends React.Component {
               <td style={{fontSize:'35px'}}>Oberon</td>
               <td style={{fontSize:'35px'}}></td>
             </tr>
+          </tbody>  
           </table>
 
         </div>

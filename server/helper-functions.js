@@ -84,44 +84,439 @@ module.exports.gameOutcome = (missionResults) => {
   return true;
 };
 
+
+
+var emptyPlayerInfo = function(userRoleMapping){
+
+  var bad = { 
+    'Mordred':'mordred', 
+    'Minion of Mordred':'minionofmordred', 
+    'Morgana': 'morgana', 
+    'Oberon':'oberon' 
+  };
+  
+  var good = {
+    'Merlin':'merlin', 
+    'Percival':'percival', 
+    'Loyal Servant_1':'loyalservant_1', 
+    'Loyal Servant_2':'loyalservant_2', 
+    'Loyal Servant_3':'loyalservant_3', 
+    'Loyal Servant_4':'loyalservant_4'
+  };
+  
+  var mordredTeam = {};
+  var merlinTeam = {};
+  
+  for (var key in userRoleMapping){
+    if(bad[key]){
+      mordredTeam[bad[key]] = [];
+    } else {
+      merlinTeam[good[key]] = [];
+    }
+  }
+  
+  return [mordredTeam, merlinTeam];
+};
+
+
 module.exports.extraInfoAssignment = (userRoleMapping) => {
   var extraInfo = {};
 
-  var spies = ['The Spies Are: '];
-  var shpies = ['The Spies Except Mordred Are: '];
-  var merlinAndMorgana = ['Merlin and Morgana Are: '];
+  for (var key in userRoleMapping){
+    
+    if ( key === 'Mordred' ){
+      
+      let merlinTeam = emptyPlayerInfo(userRoleMapping)[1];
+      let mordredTeam = emptyPlayerInfo(userRoleMapping)[0];
+      let userNameMordredTeam = [];
+      
+      merlinTeam.merlin.push('unknown');
+      merlinTeam.loyalservant_1.push('unknown');
+      merlinTeam.loyalservant_2.push('unknown');
+      if (merlinTeam.percival){
+        merlinTeam.percival.push('unknown');
+      }
+      if (merlinTeam.loyalservant_3){
+        merlinTeam.loyalservant_3.push('unknown');
+      }
+      if (merlinTeam.loyalservant_4){
+        merlinTeam.loyalservant_4.push('unknown');
+      }
+      mordredTeam.mordred.push('yourself');
+      
+      // push array of mordred team expect oberon and yourself
+      userNameMordredTeam.push(userRoleMapping['Minion of Mordred'][0]);
+      if (Object.keys(mordredTeam).length > 2){
+        userNameMordredTeam.push(userRoleMapping['Morgana'][0]);
+      } 
+      
+      mordredTeam.minionofmordred = userNameMordredTeam;
+      if (mordredTeam.morgana){
+        mordredTeam.morgana = userNameMordredTeam;
+      }
+      
+      if (mordredTeam.oberon){
+        mordredTeam.oberon.push('unknown');
+      }
+      
+      extraInfo[userRoleMapping[key][1]] = {
+        mordredTeam, 
+        merlinTeam  
+      };
+      
+      console.log(mordredTeam);
+      console.log(merlinTeam);
+      
+    } else if (key === 'Minion of Mordred'){
 
-  var players = ['The players are: '];
+      let merlinTeam = emptyPlayerInfo(userRoleMapping)[1];
+      let mordredTeam = emptyPlayerInfo(userRoleMapping)[0];
+      let userNameMordredTeam = [];
+      
+      merlinTeam.merlin.push('unknown');
+      merlinTeam.loyalservant_1.push('unknown');
+      merlinTeam.loyalservant_2.push('unknown');
+      if (merlinTeam.percival){
+        merlinTeam.percival.push('unknown');
+      }
+      if (merlinTeam.loyalservant_3){
+        merlinTeam.loyalservant_3.push('unknown');
+      }
+      if (merlinTeam.loyalservant_4){
+        merlinTeam.loyalservant_4.push('unknown');
+      }
+      mordredTeam.minionofmordred.push('yourself');
+      
+      // push array of mordred team expect oberon and yourself
+      userNameMordredTeam.push(userRoleMapping['Mordred'][0]);
+      if (Object.keys(mordredTeam).length > 2){
+        userNameMordredTeam.push(userRoleMapping['Morgana'][0]);
+      } 
+      
+      mordredTeam.mordred = userNameMordredTeam;
+      if (mordredTeam.morgana){
+        mordredTeam.morgana = userNameMordredTeam;
+      }
+      
+      if (mordredTeam.oberon){
+        mordredTeam.oberon.push('unknown');
+      }
+      
+      extraInfo[userRoleMapping[key][1]] = {
+        mordredTeam, 
+        merlinTeam  
+      };
+      
+    } else if (key === 'Morgana'){
 
-  /*
-  { 'Minion of Mordred': [ '1', '0xQ50tVjCYAe-RyWAAAL' ],
-  Mordred: [ '2', 'aKNOdPUk8zRHgUkbAAAP' ],
-  'Loyal Servant': [ '5', 'Y9Ol8kqZuS7VMKgkAAAM' ],
-  Merlin: [ '4', 'oZs4fGGn-7HfrnljAAAN' ] }
-  */
+      let merlinTeam = emptyPlayerInfo(userRoleMapping)[1];
+      let mordredTeam = emptyPlayerInfo(userRoleMapping)[0];
+      let userNameMordredTeam = [];
+      
+      merlinTeam.merlin.push('unknown');
+      merlinTeam.loyalservant_1.push('unknown');
+      merlinTeam.loyalservant_2.push('unknown');
+      if (merlinTeam.percival){
+        merlinTeam.percival.push('unknown');
+      }
+      if (merlinTeam.loyalservant_3){
+        merlinTeam.loyalservant_3.push('unknown');
+      }
+      if (merlinTeam.loyalservant_4){
+        merlinTeam.loyalservant_4.push('unknown');
+      }
+      mordredTeam.morgana.push('yourself');
+      
+      // push array of mordred team expect oberon and yourself
+      userNameMordredTeam.push(userRoleMapping['Mordred'][0]);
+      userNameMordredTeam.push(userRoleMapping['Morgana'][0]);
+      
+      mordredTeam.mordred = userNameMordredTeam;
+      mordredTeam.minionofmordred = userNameMordredTeam;
+      
+      if (mordredTeam.oberon){
+        mordredTeam.oberon.push('unknown');
+      }
+      
+      extraInfo[userRoleMapping[key][1]] = {
+        mordredTeam, 
+        merlinTeam  
+      };
+      
+    } else if (key === 'Oberon'){
 
-  for (var prop in userRoleMapping) {
-    if (prop === 'Minion of Mordred') {
-      extraInfo[userRoleMapping[prop][1]] = spies;
-      shpies.push(userRoleMapping[prop][0]);
-      spies.push(userRoleMapping[prop][0]);
-    } else if (prop === 'Mordred') {
-      extraInfo[userRoleMapping[prop][1]] = spies;
-      spies.push(userRoleMapping[prop][0]);
-    } else if (prop === 'Merlin') {
-      merlinAndMorgana.push(userRoleMapping[prop][0]);
-      extraInfo[userRoleMapping[prop][1]] = shpies;
-    } else if (prop === 'Morgana') {
-      merlinAndMorgana.push(userRoleMapping[prop][0]);
-      extraInfo[userRoleMapping[prop][1]] = spies;
-      shpies.push(userRoleMapping[prop][0]);
-      spies.push(userRoleMapping[prop][0]);
-    } else if (prop === 'Percival') {
-      extraInfo[userRoleMapping[prop][1]] = merlinAndMorgana;
-    } else if (prop === 'Oberon') {
-      shpies.push(userRoleMapping[prop][0]);
+      let merlinTeam = emptyPlayerInfo(userRoleMapping)[1];
+      let mordredTeam = emptyPlayerInfo(userRoleMapping)[0];
+      
+      merlinTeam.merlin.push('unknown');
+      merlinTeam.loyalservant_1.push('unknown');
+      merlinTeam.loyalservant_2.push('unknown');
+      if (merlinTeam.percival){
+        merlinTeam.percival.push('unknown');
+      }
+      if (merlinTeam.loyalservant_3){
+        merlinTeam.loyalservant_3.push('unknown');
+      }
+      if (merlinTeam.loyalservant_4){
+        merlinTeam.loyalservant_4.push('unknown');
+      }
+      mordredTeam.mordred.push('unknown');
+      
+      mordredTeam.minionofmordred.push('unknown');
+      if (mordredTeam.morgana){
+        mordredTeam.morgana.push('unknown');
+      }
+      if (mordredTeam.oberon){
+        mordredTeam.oberon.push('yourself');
+      }
+      
+      extraInfo[userRoleMapping[key][1]] = {
+        mordredTeam,
+        merlinTeam  
+      };
+      
+    } else if (key === 'Merlin'){
+
+      let merlinTeam = emptyPlayerInfo(userRoleMapping)[1];
+      let mordredTeam = emptyPlayerInfo(userRoleMapping)[0];
+      let userNameMordredTeam = [];
+
+      merlinTeam.merlin.push('yourself');
+      merlinTeam.loyalservant_1.push('unknown');
+      merlinTeam.loyalservant_2.push('unknown');
+      if (merlinTeam.percival){
+        merlinTeam.percival.push('unknown');
+      }
+      if (merlinTeam.loyalservant_3){
+        merlinTeam.loyalservant_3.push('unknown');
+      }
+      if (merlinTeam.loyalservant_4){
+        merlinTeam.loyalservant_4.push('unknown');
+      }
+      
+      mordredTeam.mordred.push('unknown');
+
+
+      // push array of mordred team expect oberon and yourself
+      userNameMordredTeam.push(userRoleMapping['Minion of Mordred'][0]);
+      
+      if (Object.keys(mordredTeam).length === 3){
+        userNameMordredTeam.push(userRoleMapping['Morgana'][0]);
+      } 
+      if (Object.keys(mordredTeam).length === 4){
+        userNameMordredTeam.push(userRoleMapping['Morgana'][0]);
+        userNameMordredTeam.push(userRoleMapping['Oberon'][0]);
+      } 
+
+      mordredTeam.minionofmordred = userNameMordredTeam;
+      if (mordredTeam.morgana){
+        mordredTeam.morgana = userNameMordredTeam;
+      }
+      if (mordredTeam.oberon){
+        mordredTeam.oberon = userNameMordredTeam;
+      }
+      
+      extraInfo[userRoleMapping[key][1]] = {
+        mordredTeam,
+        merlinTeam  
+      };
+      
+    } else if (key === 'Percival'){
+
+      let merlinTeam = emptyPlayerInfo(userRoleMapping)[1];
+      let mordredTeam = emptyPlayerInfo(userRoleMapping)[0];
+      let morganMerlinUserName = [];
+      
+      merlinTeam.loyalservant_1.push('unknown');
+      merlinTeam.loyalservant_2.push('unknown');
+      if (merlinTeam.percival){
+        merlinTeam.percival.push('yourself');
+      }
+      if (merlinTeam.loyalservant_3){
+        merlinTeam.loyalservant_3.push('unknown');
+      }
+      if (merlinTeam.loyalservant_4){
+        merlinTeam.loyalservant_4.push('unknown');
+      }
+      mordredTeam.mordred.push('unknown');
+      
+      mordredTeam.minionofmordred.push('unknown');
+
+      morganMerlinUserName.push(userRoleMapping['Morgana'][0]);
+      morganMerlinUserName.push(userRoleMapping['Merlin'][0]);
+      mordredTeam.morgana = morganMerlinUserName;
+      merlinTeam.merlin = morganMerlinUserName;
+
+      if (mordredTeam.oberon){
+        mordredTeam.oberon.push('unknown');
+      }
+      
+      extraInfo[userRoleMapping[key][1]] = {
+        mordredTeam,
+        merlinTeam  
+      };
+      
+    } else if (key === 'Loyal Servant_1'){
+      
+      let merlinTeam = emptyPlayerInfo(userRoleMapping)[1];
+      let mordredTeam = emptyPlayerInfo(userRoleMapping)[0];
+      
+      merlinTeam.merlin.push('unknown');
+      merlinTeam.loyalservant_1.push('yourself');
+      merlinTeam.loyalservant_2.push('unknown');
+      if (merlinTeam.percival){
+        merlinTeam.percival.push('unknown');
+      }
+      if (merlinTeam.loyalservant_3){
+        merlinTeam.loyalservant_3.push('unknown');
+      }
+      if (merlinTeam.loyalservant_4){
+        merlinTeam.loyalservant_4.push('unknown');
+      }
+      mordredTeam.mordred.push('unknown');
+      
+      mordredTeam.minionofmordred.push('unknown');
+      if (mordredTeam.morgana){
+        mordredTeam.morgana.push('unknown');
+      }
+      if (mordredTeam.oberon){
+        mordredTeam.oberon.push('unknown');
+      }
+      
+      extraInfo[userRoleMapping[key][1]] = {
+        mordredTeam,
+        merlinTeam  
+      };
+
+    } else if (key === 'Loyal Servant_2'){
+
+      let merlinTeam = emptyPlayerInfo(userRoleMapping)[1];
+      let mordredTeam = emptyPlayerInfo(userRoleMapping)[0];
+      
+      merlinTeam.merlin.push('unknown');
+      merlinTeam.loyalservant_1.push('unknown');
+      merlinTeam.loyalservant_2.push('yourself');
+      if (merlinTeam.percival){
+        merlinTeam.percival.push('unknown');
+      }
+      if (merlinTeam.loyalservant_3){
+        merlinTeam.loyalservant_3.push('unknown');
+      }
+      if (merlinTeam.loyalservant_4){
+        merlinTeam.loyalservant_4.push('unknown');
+      }
+      mordredTeam.mordred.push('unknown');
+      
+      mordredTeam.minionofmordred.push('unknown');
+      if (mordredTeam.morgana){
+        mordredTeam.morgana.push('unknown');
+      }
+      if (mordredTeam.oberon){
+        mordredTeam.oberon.push('unknown');
+      }
+      
+      extraInfo[userRoleMapping[key][1]] = {
+        mordredTeam,
+        merlinTeam  
+      };
+      
+    } else if (key === 'Loyal Servant_3'){
+
+      let merlinTeam = emptyPlayerInfo(userRoleMapping)[1];
+      let mordredTeam = emptyPlayerInfo(userRoleMapping)[0];
+      
+      merlinTeam.merlin.push('unknown');
+      merlinTeam.loyalservant_1.push('unknown');
+      merlinTeam.loyalservant_2.push('unknown');
+      if (merlinTeam.percival){
+        merlinTeam.percival.push('unknown');
+      }
+      if (merlinTeam.loyalservant_3){
+        merlinTeam.loyalservant_3.push('yourself');
+      }
+      if (merlinTeam.loyalservant_4){
+        merlinTeam.loyalservant_4.push('unknown');
+      }
+      mordredTeam.mordred.push('unknown');
+      
+      mordredTeam.minionofmordred.push('unknown');
+      if (mordredTeam.morgana){
+        mordredTeam.morgana.push('unknown');
+      }
+      if (mordredTeam.oberon){
+        mordredTeam.oberon.push('unknown');
+      }
+      
+      extraInfo[userRoleMapping[key][1]] = {
+        mordredTeam,
+        merlinTeam  
+      };
+      
+    } else if (key === 'Loyal Servant_4'){
+
+      let merlinTeam = emptyPlayerInfo(userRoleMapping)[1];
+      let mordredTeam = emptyPlayerInfo(userRoleMapping)[0];
+      
+      merlinTeam.merlin.push('unknown');
+      merlinTeam.loyalservant_1.push('unknown');
+      merlinTeam.loyalservant_2.push('unknown');
+      if (merlinTeam.percival){
+        merlinTeam.percival.push('unknown');
+      }
+      if (merlinTeam.loyalservant_3){
+        merlinTeam.loyalservant_3.push('unknown');
+      }
+      if (merlinTeam.loyalservant_4){
+        merlinTeam.loyalservant_4.push('yourself');
+      }
+      mordredTeam.mordred.push('unknown');
+      
+      mordredTeam.minionofmordred.push('unknown');
+      if (mordredTeam.morgana){
+        mordredTeam.morgana.push('unknown');
+      }
+      if (mordredTeam.oberon){
+        mordredTeam.oberon.push('unknown');
+      }
+      
+      extraInfo[userRoleMapping[key][1]] = {
+        mordredTeam,
+        merlinTeam  
+      };
+      
     }
   }
+
+
+  // var spies = ['The Spies Are: '];
+  // var shpies = ['The Spies Except Mordred Are: '];
+  // var merlinAndMorgana = ['Merlin and Morgana Are: '];
+
+  // for (var prop in userRoleMapping) {
+  //   if (prop === 'Minion of Mordred') {
+  //     extraInfo[userRoleMapping[prop][1]] = spies;
+  //     shpies.push(userRoleMapping[prop][0]);
+  //     spies.push(userRoleMapping[prop][0]);
+  //   } else if (prop === 'Mordred') {
+  //     extraInfo[userRoleMapping[prop][1]] = spies;
+  //     spies.push(userRoleMapping[prop][0]);
+  //   } else if (prop === 'Merlin') {
+  //     merlinAndMorgana.push(userRoleMapping[prop][0]);
+  //     extraInfo[userRoleMapping[prop][1]] = shpies;
+  //   } else if (prop === 'Morgana') {
+  //     merlinAndMorgana.push(userRoleMapping[prop][0]);
+  //     extraInfo[userRoleMapping[prop][1]] = spies;
+  //     shpies.push(userRoleMapping[prop][0]);
+  //     spies.push(userRoleMapping[prop][0]);
+  //   } else if (prop === 'Percival') {
+  //     extraInfo[userRoleMapping[prop][1]] = merlinAndMorgana;
+  //   } else if (prop === 'Oberon') {
+  //     shpies.push(userRoleMapping[prop][0]);
+  //   }
+  // }
+  
+  //console.log(extraInfo);
+
   return extraInfo;
 }
 

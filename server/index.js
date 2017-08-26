@@ -80,6 +80,9 @@ io.on('connection', (socket) => {
               userRoles[roles[users[i].dataValues.socketid]] = [users[i].dataValues.username, users[i].dataValues.socketid];
             }
             var extraInfoAssignment = helpers.extraInfoAssignment(userRoles);
+
+            console.log('extraInfoAssignment: ', extraInfoAssignment);
+
             socket.emit('hoststart', {role: roles[socket.id], missionSize: votesNeeded, extraInfo: extraInfoAssignment[socket.id]});
             for (var i = 0; i < socketids.length; i++) {
               database.assignRole(socketids[i], roles[socketids[i]], () => {
