@@ -2,6 +2,7 @@ import React from 'react';
 
 import InfoPanel from './InfoPanel.jsx';
 import Timer from './Timer.jsx';
+import GameBoard from './GameBoard/GameBoard.jsx';
 
 class MissionVoteScreen extends React.Component {
 
@@ -28,7 +29,12 @@ class MissionVoteScreen extends React.Component {
         <h3> Mission Vote </h3>
 
         <InfoPanel role={this.props.role} missionHistory={this.props.history}  extraInfo = {this.props.extraInfo}/>
-
+        <GameBoard
+          history = {this.props.questHistory}
+          numPeopleOnMissions = {this.props.numPeopleOnMissions}
+          currentMission = {this.props.questHistory.length}
+          voteTrack='{"0": [false, false, true], "1": [false, true], "2": [true], "3": [], "4": []}'
+          />
 
         <p> You are on a mission with</p>
         <table >
