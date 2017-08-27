@@ -1,6 +1,7 @@
 import React from 'react';
 import GameOwnerEnterNameScreen from './GameOwnerEnterNameScreen.jsx';
 import PlayerEnterNameScreen from './PlayerEnterNameScreen.jsx';
+import $ from 'jQuery';
 class WelcomeScreen extends React.Component {
 
   constructor(props) {
@@ -29,8 +30,8 @@ class WelcomeScreen extends React.Component {
       var pages = {welcome: (
         <div id='welcomeScreen'>
      <h2> Welcome to Definitely Not Avalon </h2>
-
         <div className="welcomeScreenInput">
+
           <button onClick={this.host} >
             New Game
           </button>
@@ -40,14 +41,14 @@ class WelcomeScreen extends React.Component {
           </button>
           </div>
 
-
           <div id="tableRules" style={{fontSize:'50px'}}>Merlin Team</div>
             <div className="row-fluid">
-            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/merlin.png)`}}></div>
-            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/percival.png)`}}></div>
-            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/loyalservant.png)`}}></div>
-            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/loyalservant_2.png)`}}></div>
+            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/merlin.png)`}} data-toggle="popover" data-content="Default popover" title="If you get discovered you lose the game"></div>
+            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/percival.png)`}} data-toggle="popover" data-content="Default popover" title="Knows Merlins identity and tries to keep him safe"></div>
+            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/loyalservant.png)`}} data-toggle="popover" data-content="Default popover" title="Loyal Servant of Arthur"></div>
+            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/loyalservant_2.png)`}} data-toggle="popover" data-content="Default popover" title="Loyal Servant of Arthur"></div>
         </div>
+
 
 
         <div id="tableRules" style={{fontSize:'50px'}}>Mordred Team</div>

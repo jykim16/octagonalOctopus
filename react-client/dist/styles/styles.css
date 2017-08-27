@@ -164,6 +164,10 @@ ol, table {
   font-size: 50px;
 }
 
+.name {
+  text-align: center;
+  font-size: 50px;
+}
 .tableRules {
   text-align: center;
 }
@@ -263,7 +267,16 @@ div.bottom {
 
 }
 
+.table th {
+   text-align: center;
+}
+
+.table td {
+   text-align: center;
+}
+
 .row-fluid {
+
   text-align: center;
 }
 
