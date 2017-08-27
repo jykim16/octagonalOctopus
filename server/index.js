@@ -82,12 +82,13 @@ io.on('connection', (socket) => {
             var extraInfoAssignment = helpers.extraInfoAssignment(userRoles);
             database.getResults(data.roomname,(history) => {
               database.getHost(data.roomname, (host) => {
-                socket.emit('hoststart', {role: roles[socket.id], history: history, hostName: host, voteTrack: voteTrack, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socket.id]});
+                console.log('host from start game: ', host)
+                socket.emit('hoststart', {role: roles[socket.id], history: history, hostName: host.username, voteTrack: voteTrack, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socket.id]});
                 for (var i = 0; i < socketids.length; i++) {
                   database.assignRole(socketids[i], roles[socketids[i]], () => {
                   });
                   if (socketids[i] !== socket.id) {
-                    socket.to(socketids[i]).emit('playerstart', {role: roles[socketids[i]], hostName: host, voteTrack: voteTrack, history: history, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socketids[i]]});
+                    socket.to(socketids[i]).emit('playerstart', {role: roles[socketids[i]], hostName: host.username, voteTrack: voteTrack, history: history, numPeopleOnMissions: numPeopleOnMissions, missionSize: votesNeeded, extraInfo: extraInfoAssignment[socketids[i]]});
                   }
                 }
               })
@@ -149,6 +150,7 @@ io.on('connection', (socket) => {
             database.updateVoteTrack(data.roomname, true, (voteTrack) => {
               database.updateHost(data.roomname, (hostName) => {
                 var host = hostName.username;
+                console.log('hostname in quest vote: ', host)
                 //send nomission signal to everyone, but not to self.
 
                 socket.emit('nomissionwaiting', {voteTrack, hostName: host, missionPlayers: data.participants})
@@ -200,33 +202,35 @@ io.on('connection', (socket) => {
         // returns false if number of fails is 3 or more
         // returns true if number of wins is 3 or more
         // return 'notyet' otherwise
-        var threeWinsOrFails = helpers.gameIsFinished(results);
-        if (threeWinsOrFails === 'notyet' && results.length < 5) {
-          database.nextMission(data.roomname, (votesNeeded) => {
-            io.in(data.roomname).emit('missionresult', {results: votesArray, missionSize: votesNeeded, questHistory: results});
-          });
-        } else {
-          var finalOutcome = helpers.gameOutcome(results);
-          if (finalOutcome) {
-            io.in(data.roomname).emit('waitmerlinchoice', { questHistory: results});
-            database.getMordred(data.roomname, (mordred) => {
-              if (mordred.socketid === socket.id) {
-                socket.emit('entermerlin', {results: votesArray, questHistory: results});
-              } else{
-                  socket.to(mordred.socketid).emit('entermerlin', {results: votesArray, questHistory: results});
-              }
+        database.getHost(data.roomname, (host) => {
+          var threeWinsOrFails = helpers.gameIsFinished(results);
+          if (threeWinsOrFails === 'notyet' && results.length < 5) {
+            database.nextMission(data.roomname, (votesNeeded) => {
+              io.in(data.roomname).emit('missionresult', {hostName: host.username, results: votesArray, missionSize: votesNeeded, questHistory: results});
             });
           } else {
-            database.getAllPlayers(data.roomname, (users) => {
-              var allPlayers = {};
-              for (var i = 0; i < users.length; i++) {
-                allPlayers[users[i].dataValues.username] = users[i].dataValues.role;
-              }
-              var results = votesArray;
-              io.in(data.roomname).emit('finaloutcome', {finalOutcome, results, allPlayers, questHistory: results});
-            });
+            var finalOutcome = helpers.gameIsFinished(results);
+            if (finalOutcome === true) {
+              io.in(data.roomname).emit('waitmerlinchoice', {hostName: host.username, questHistory: results});
+              database.getMordred(data.roomname, (mordred) => {
+                if (mordred.socketid === socket.id) {
+                  socket.emit('entermerlin', {hostName: host.username, results: votesArray, questHistory: results});
+                } else{
+                    socket.to(mordred.socketid).emit('entermerlin', {hostName: host.username, results: votesArray, questHistory: results});
+                }
+              });
+            } else {
+              database.getAllPlayers(data.roomname, (users) => {
+                var allPlayers = {};
+                for (var i = 0; i < users.length; i++) {
+                  allPlayers[users[i].dataValues.username] = users[i].dataValues.role;
+                }
+                var results = votesArray;
+                io.in(data.roomname).emit('finaloutcome', {hostName: host.username, finalOutcome, results, allPlayers, questHistory: results});
+              });
+            }
           }
-        }
+        });
       });
     });
   });

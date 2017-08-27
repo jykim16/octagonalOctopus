@@ -12,10 +12,10 @@ import AwaitMissionOutcomeScreen from './components/AwaitMissionOutcomeScreen.js
 import MissionOutcomeScreen from './components/MissionOutcomeScreen.jsx';
 import AwaitAssassinScreen from './components/AwaitAssassinScreen.jsx';
 import MerlinChoiceScreen from './components/MerlinChoiceScreen.jsx';
+import GameOutcomeScreen from './components/GameOutcomeScreen.jsx';
 import InfoPanel from './components/InfoPanel.jsx';
 import openSocket from 'socket.io-client';
 import ApproveQuestScreen from './components/ApproveQuestScreen.jsx';
-
 
 class App extends React.Component {
   constructor(props) {
@@ -66,9 +66,6 @@ class App extends React.Component {
 
     //host presses start and moves to page where he can enter the names
     this.socket.on('hoststart', (data)=>{
-
-      console.log('hoststart: ', data.extraInfo);
-
       this.setState({role: data.role,
                     host: true,
                     history: data.history,
@@ -122,7 +119,6 @@ class App extends React.Component {
     //players vote on passing the quest members or not
     this.socket.on('questApprovalNeeded', (data)=>{
       this.setState({missionPlayers: data.participants,
-                      hostName: data.hostName,
                       pageID: 'ApproveQuestScreen'});
     });
 
@@ -159,6 +155,7 @@ class App extends React.Component {
       });
       var history = [`${pass} pass ${fail} fail`];
       this.setState({failVotes: fail,
+                      hostName: data.hostName,
                       successVotes: pass,
                       missionSize: data.missionSize,
                       missionOutcome: this.state.missionOutcome.concat([history]),
@@ -179,13 +176,14 @@ class App extends React.Component {
       var history = [`${pass} pass ${fail} fail`];
 
       this.setState({pageID: 'MerlinChoiceScreen',
+                    hostName: data.hostName,
                     missionOutcome: this.state.missionOutcome.concat([history])});
     });
 
     this.socket.on('waitmerlinchoice', (data) => {
       this.setState({
-        pageID: 'AwaitAssassinScreen'
-
+        pageID: 'AwaitAssassinScreen',
+        hostName: data.hostName
       });
     });
 
@@ -198,6 +196,7 @@ class App extends React.Component {
       var history = [`${pass} pass ${fail} fail`];
 
       this.setState({ gameOutcome: data.finalOutcome,
+                      hostName: data.hostName,
                       playerRoleMapping: data.allPlayers,
                       missionOutcome: this.state.missionOutcome.concat([history])
                     }, () => {
@@ -325,11 +324,10 @@ class App extends React.Component {
 
     DiscussMissionPlayersScreen: ()=> {
 
-      console.log('DiscussMissionPlayersScreen: ', this.state.extraInfo);
-
       return (
         <DiscussMissionPlayersScreen
           numPeopleOnMissions={this.state.numPeopleOnMissions}
+          hostName={this.state.hostName}
           questHistory= {this.state.questHistory}
           voteTrack={this.state.voteTrack}
           missionSize={this.state.missionSize}
@@ -344,11 +342,10 @@ class App extends React.Component {
 
     EnterMissionPlayersScreen: ()=> {
 
-      console.log('EnterMissionPlayersScreen: ', this.state.extraInfo);
-
       return (
         <EnterMissionPlayersScreen
           numPeopleOnMissions={this.state.numPeopleOnMissions}
+          hostName={this.state.hostName}
           questHistory= {this.state.questHistory}
           voteTrack={this.state.voteTrack}
           missionSize={this.state.missionSize}
@@ -458,6 +455,7 @@ class App extends React.Component {
       return (
         <MissionVoteScreen
           numPeopleOnMissions={this.state.numPeopleOnMissions}
+          hostName={this.state.hostName}
           questHistory= {this.state.questHistory}
           voteTrack={this.state.voteTrack}
           players={this.players}
