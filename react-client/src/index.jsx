@@ -29,6 +29,7 @@ class App extends React.Component {
 
     this.socket.on('newgame', (data)=>{
       this.setState({accessCode: data.accessCode,
+                      username: data.username,
                       players: data.allplayers,
                       pageID: 'GameOwnerWaitingForPlayersScreen'
                     });
@@ -48,6 +49,7 @@ class App extends React.Component {
     this.socket.on('newplayer', (data)=>{
       this.setState({players: data.allplayers,
                     accessCode: data.accessCode,
+                    username: data.username,
                     pageID: 'PlayerWaitingForPlayersScreen'
                     });
     });
@@ -127,6 +129,8 @@ class App extends React.Component {
     //players on mission should go to voting page
     this.socket.on('missionvote', (data)=>{
       this.setState({missionPlayers: data.missionPlayers,
+                    host: this.state.username === data.hostName,
+                    voteTrack: data.voteTrack,
                     pageID: 'MissionVoteScreen',
                     hostName: data.hostName,
                     roomname: data.roomname});
@@ -134,7 +138,11 @@ class App extends React.Component {
 
     //players not on mission go here i dont need data i just need you to emit to setState
     this.socket.on('nomissionwaiting', (data)=>{
-      this.setState({pageID: 'AwaitMissionOutcomeScreen'});
+      this.setState({pageID: 'AwaitMissionOutcomeScreen',
+                    voteTrack: data.voteTrack,
+                    hostName: data.hostName,
+                    host: this.state.username === data.hostName
+      });
     });
 
     //send them back to welcome page if they hit back

@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
           database.getAllUsernames(data.roomname, (allplayers) => {
             socket.to(data.roomname).emit('playerjoined', {allplayers})
             var accessCode = data.roomname;
-            socket.emit('newplayer', {allplayers, accessCode})
+            socket.emit('newplayer', {username: data.username, allplayers, accessCode})
           });
         });
       }
@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
     database.createGame(accessCode, () => {
       var allplayers = [data.username];
       database.addPlayer(accessCode, true, data.username, socket.id, () => {
-        socket.emit('newgame', {accessCode, allplayers});
+        socket.emit('newgame', {username: data.username, accessCode, allplayers});
       });
     });
   });
@@ -103,6 +103,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('missionparticipants', (data) => {
+    console.log('is this running?: in server- missionparticipants ')
     io.in(data.roomname).emit('nomissionwaiting', {})
     for (var i = 0; i < data.participants.length; i++) {
       database.getSocketId(data.participants[i], data.roomname, (socketid) => {
@@ -130,7 +131,6 @@ io.on('connection', (socket) => {
   };
 
   const computeQuestResult = (data, callback) => {
-    console.log('compute data: ', data);
     database.addQuestVote(data.roomname, data.vote, (numPlayers, questApprovalArray)=>{
       if (numPlayers === questApprovalArray.length) {
         database.resetQuestVote(data.roomname);
@@ -148,24 +148,45 @@ io.on('connection', (socket) => {
             //add approved to board
             database.updateVoteTrack(data.roomname, true, (voteTrack) => {
               database.updateHost(data.roomname, (hostName) => {
-                io.in(data.roomname).emit('nomissionwaiting', {voteTrack, hostName, missionPlayers: data.participants})
+                var host = hostName.username;
+                //send nomission signal to everyone, but not to self.
+
+                socket.emit('nomissionwaiting', {voteTrack, hostName: host, missionPlayers: data.participants})
+                //used io.in instead of socket.to(id) because don't want to use db.getSocketId
+                io.in(data.roomname).emit('nomissionwaiting', {voteTrack, hostName: host, missionPlayers: data.participants})
+
                 for (var i = 0; i < data.participants.length; i++) {
                   database.getSocketId(data.participants[i], data.roomname, (socketid) => {
-                    socket.to(socketid).emit('missionvote', {voteTrack, hostName, missionPlayers: data.participants});
+                    if (socketid === socket.id) {
+                      socket.emit('missionvote', {voteTrack, hostName: host, missionPlayers: data.participants});
+                    } else {
+                      socket.to(socketid).emit('missionvote', {voteTrack, hostName: host, missionPlayers: data.participants});
+                    }
                   });
                 };
               });
             });
           } else {
+            //if this is the final vote, but the quest proposal was not passed.
             //change host and add dissapproved to board and send back to entermissionplayer
             database.updateVoteTrack(data.roomname, false, (voteTrack) => {
               database.updateHost(data.roomname, (hostName) => {
                 //need to emit to return to entermissionplayer for host and discussmissionplayer for nonhost
                 var host = hostName.username;
                 var hostSocketId = hostName.socketid;
-                console.log('voteTrack in db: ', voteTrack)
-                socket.emit('nextroundplayerstart', {hostName: host, voteTrack: voteTrack});
-                socket.to(hostSocketId).emit('nextroundhoststart', {hostName: host, voteTrack: voteTrack});
+
+                socket.emit('nextroundplayerstart', {host: false, hostName: host, voteTrack: voteTrack});
+                io.in(data.roomname).emit('nextroundplayerstart', {host: false, hostName: host, voteTrack: voteTrack});
+
+                for (var i = 0; i < data.participants.length; i++) {
+                  database.getSocketId(data.participants[i], data.roomname, (socketid) => {
+                    if (socket.id === socketid) {
+                      socket.emit('nextroundhoststart', {host: true, hostName: host, voteTrack: voteTrack});
+                    } else {
+                      socket.to(hostSocketId).emit('nextroundhoststart', {host: true, hostName: host, voteTrack: voteTrack});
+                    }
+                  });
+                }
               });
             });
           }

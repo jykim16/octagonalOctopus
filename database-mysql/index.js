@@ -214,19 +214,15 @@ module.exports.updateHost = function(gameKey, callback) {
   Game.findOne({where: {gameToken}})
     .then(game => {
       var counter = game.dataValues.hostChangeCounter;
-console.log('counter: ', counter);
       User.findAll({where: {gameKey, host: false}, order: sequelize.col('createdAt')})
         .then(nonHostUsers => {
-console.log('nonhostusers: ', nonHostUsers);
           var newHost = nonHostUsers[counter].dataValues;
           game.update({hostChangeCounter: (++counter % nonHostUsers.length)});
           User.findOne({where: {gameKey, host: true}})
             .then(oldHost => {
-console.log('oldhost: ', oldHost.dataValues)
               oldHost.update({host:false});
               User.findOne({where: {gameKey, username: newHost.username}})
                 .then(foundNewHost => {
-console.log(foundNewHost.dataValues);
                   foundNewHost.update({host: true})
                    .then(callback(foundNewHost.dataValues));
                 })
