@@ -1,7 +1,6 @@
 import React from 'react';
 import GameOwnerEnterNameScreen from './GameOwnerEnterNameScreen.jsx';
 import PlayerEnterNameScreen from './PlayerEnterNameScreen.jsx';
-import $ from 'jQuery';
 class WelcomeScreen extends React.Component {
 
   constructor(props) {
