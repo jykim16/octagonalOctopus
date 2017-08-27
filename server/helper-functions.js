@@ -233,7 +233,7 @@ module.exports.extraInfoAssignment = (userRoleMapping) => {
       
       // push array of mordred team expect oberon and yourself
       userNameMordredTeam.push(userRoleMapping['Mordred'][0]);
-      userNameMordredTeam.push(userRoleMapping['Morgana'][0]);
+      userNameMordredTeam.push(userRoleMapping['Minion of Mordred'][0]);
       
       mordredTeam.mordred = userNameMordredTeam;
       mordredTeam.minionofmordred = userNameMordredTeam;
