@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
 import WelcomeScreen from './components/WelcomeScreen.jsx';
 import GameOwnerEnterNameScreen from './components/GameOwnerEnterNameScreen.jsx';
 import PlayerEnterNameScreen from './components/PlayerEnterNameScreen.jsx';
