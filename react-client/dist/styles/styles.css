@@ -26,21 +26,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /*margin-top: 80px;*/
+  margin-top: 50px;
   width: 80%;
   padding: 20px;
-  background: rgba(0, 0, 26, 0.5);
+  background: rgba(0, 0, 26, 0.6);
   color: white;
   border-radius: 15px;
   overflow: auto;
+  box-shadow: 0 0 10px 5px #333333;
 }
 
 /* Most components and inputs within components will have these styles */
 #welcomeScreen, #playerEnterNameScreen, #playerEnterNameScreenInput,
 #gameOwnerEnterNameScreen, #gameOwnerEnterNameScreenInput,
 #gameOwnerWaitingForPlayersScreen, #enterMissionPlayersScreen,
-#missionVoteScreen, #missionOutcome, #playerWaitingForPlayersScreen, 
-#awaitMissionOutcomeScreen, #awaitAssassinScreen, #discussMissionPlayersScreen, 
+#missionVoteScreen, #missionOutcome, #playerWaitingForPlayersScreen,
+#awaitMissionOutcomeScreen, #awaitAssassinScreen, #discussMissionPlayersScreen,
 #merlinChoiceScreen {
   display: flex;
   flex-direction: column;
@@ -64,6 +65,7 @@ body {
 
 #accessCode {
   font-family: monospace;
+  margin: 30px 0 30px 0;
   padding: 5px;
   font-size: 50px;
   text-align: center;
@@ -74,12 +76,18 @@ body {
 }
 
 .gameOwnerWaitingForPlayersScreenInput, .missionVoteScreenInput {
+  display: flex;
   flex-direction: row;
+  justify-content: center;
+  width: 100%;
 }
-
 
 .leaveButton, .waitMessage {
   align-self: center;
+}
+
+.waitMessage {
+  margin-top: 50px;
 }
 
 #missionSelection, #gameOutcomeScreen ul {
@@ -116,7 +124,7 @@ body {
   border-color: black;
   align-items: center;
   flex-direction: column;
-  width: 80%;
+  margin-top: 30px;
 }
 
 #gameOutcomeScreen {
@@ -134,14 +142,14 @@ body {
 }
 
 p {
-  text-align: left;
-  align-self: flex-start;
-  font-size: 50px;
+  text-align: center;
+  /*align-self: flex-start;*/
+  font-size: 5vw;
 }
 
 h1, h3, h4, h5, h6 {
   text-align: center;
-  font-size: 50px;
+  font-size: 5vw;
 }
 
 h2 {
@@ -150,7 +158,8 @@ h2 {
   border-bottom: solid;
   border-width: 5px;
   border-radius: 20px;
-  font-size: 50px;
+  font-size: 5vw;
+  line-height: 10vw;
 }
 
 ul {
@@ -167,9 +176,12 @@ ol, table {
 .name {
   text-align: center;
   font-size: 50px;
+  margin-bottom: 50px;
 }
-.tableRules {
+
+.welcomeScreenTeams {
   text-align: center;
+  font-size: 5vw;
 }
 
 .photos {
@@ -186,10 +198,9 @@ ol, table {
 
 input {
   margin: 5px;
-  width: 350px;
-  height: 100px;
+  width: 80%;
   background-color: lightgrey;
-  font-size: 50px;
+  font-size: 5vw;
   font-family: 'Eagle Lake', cursive;
   font-weight: bolder;
 }
@@ -211,14 +222,15 @@ input[type=text]:hover {
 
 button {
   margin: 5px;
-  width: 350px;
-  height: 100px;
+  width: 40%;
+  line-height: 2.5em;
+  color: black;
   text-align: center;
   align-self: center;
   background-color: lightgrey;
-  font-size: 3.5vw;
+  font-size: 3vw;
   font-family: 'Eagle Lake', cursive;
-
+  border-radius: 15px;
 }
 
 /****Hover on buttons turns text red****/
@@ -278,5 +290,70 @@ div.bottom {
 .row-fluid {
 
   text-align: center;
+  /* border-style: solid; */
+  border-color: #3c85b0;
+  border-radius: 10px;
+  background: url('https://i.pinimg.com/736x/16/60/b3/1660b3b75ae18559ca301fb8bbfcea69--sweet-nothings-poetry-quotes.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* color: black; */
+  box-shadow: inset 0 0 20px 2px black;
 }
 
+.row-fluid div {
+  padding: 25px;
+}
+
+.welcomeScreenInput {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin: 20px 0 20px 0;
+}
+
+.gameOwnerEnterNameScreenForm, .playerEnterNameScreenForm, .playerEnterNameScreenInput {
+  padding-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gameOwnerEnterNameScreenForm form, .playerEnterNameScreenForm form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameOwnerEnterNameScreenForm form input, .playerEnterNameScreenForm form input {
+  border-radius: 10px;
+  color: black;
+}
+
+.backButton {
+  margin-top: 30px;
+}
+
+.teams {
+  margin-top: 50px;
+}
+
+.playerWaitingForPlayersScreenInput {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#enterMissionPlayersScreen {
+  text-align: center;
+}
+
+.table-responsive th {
+  text-align: center;
+  font-size: 4vw;
+}

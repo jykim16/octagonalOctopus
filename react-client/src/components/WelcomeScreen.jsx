@@ -27,40 +27,39 @@ class WelcomeScreen extends React.Component {
 
     pageSelector(key) {
       var pages = {welcome: (
-        <div id='welcomeScreen'>
-     <h2> Welcome to Definitely Not Avalon </h2>
-        <div className="welcomeScreenInput">
+    <div id='welcomeScreen'>
+      <div className="welcomeScreenControlPanel">
+      <h2> Welcome to Definitely Not Avalon </h2>
 
-          <button onClick={this.host} >
-            New Game
-          </button>
+      <div className="welcomeScreenInput">
+        <button onClick={this.host} >
+          New Game
+        </button>
 
-          <button onClick={this.player} >
-            Join
-          </button>
-          </div>
+        <button onClick={this.player} >
+          Join
+        </button>
+      </div>
+      </div>
 
-          <div id="tableRules" style={{fontSize:'50px'}}>Merlin Team</div>
-            <div className="row-fluid">
-            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/merlin.png)`}} data-toggle="popover" data-content="Default popover" title="If you get discovered you lose the game"></div>
-            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/percival.png)`}} data-toggle="popover" data-content="Default popover" title="Knows Merlins identity and tries to keep him safe"></div>
-            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/loyalservant.png)`}} data-toggle="popover" data-content="Default popover" title="Loyal Servant of Arthur"></div>
-            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/loyalservant_2.png)`}} data-toggle="popover" data-content="Default popover" title="Loyal Servant of Arthur"></div>
+      <div className="teams">
+        <div className="welcomeScreenTeams">.: Merlin Team :.</div>
+        <div className="row-fluid">
+          <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/merlin.png)`}}></div>
+          <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/percival.png)`}}></div>
+          <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/loyalservant.png)`}}></div>
+          <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/loyalservant_2.png)`}}></div>
         </div>
 
 
-
-        <div id="tableRules" style={{fontSize:'50px'}}>Mordred Team</div>
+          <div className="welcomeScreenTeams">.: Mordred Team :.</div>
           <div className="row-fluid">
-          <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/mordred.png)`}}></div>
-          <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/oberon.png)`}}></div>
-          <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/morgana.png)`}}></div>
-          <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/minionofmordred.png)`}}></div>
+            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/mordred.png)`}}></div>
+            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/oberon.png)`}}></div>
+            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/morgana.png)`}}></div>
+            <div className="bottom col-xs-6 col-md-3" style={{content: `url(/styles/Resources/minionofmordred.png)`}}></div>
+          </div>
         </div>
-
-
-
-
 
       </div>
     ),
